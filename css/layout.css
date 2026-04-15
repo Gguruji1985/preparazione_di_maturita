@@ -1,0 +1,277 @@
+/* layout.css — sidebar + content layout */
+
+:root {
+  --topbar-height:  52px;
+  --sidebar-width:  300px;
+  --sidebar-min:    180px;
+  --sidebar-max:    520px;
+  --handle-width:   5px;
+
+  --color-bg:           #0f1117;
+  --color-bg-surface:   #1a1d27;
+  --color-bg-panel:     #1e2130;
+  --color-border:       #2a2d3e;
+  --color-text:         #e2e4f0;
+  --color-text-muted:   #7a7f99;
+  --color-accent:       #6c63ff;
+  --color-accent-glow:  rgba(108, 99, 255, 0.25);
+
+  /* Node level colours */
+  --color-level-0: #6c63ff;
+  --color-level-1: #a78bfa;
+  --color-level-2: #60a5fa;
+  --color-level-3: #34d399;
+  --color-level-4: #f9a8d4;
+
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --shadow-soft: 0 4px 24px rgba(0,0,0,0.4);
+}
+
+/* ─────────────────────────────────────────
+   BASE
+───────────────────────────────────────── */
+html, body {
+  height: 100%;
+  overflow: hidden;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  font-size: 15px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ─────────────────────────────────────────
+   TOP BAR
+───────────────────────────────────────── */
+#topbar {
+  height: var(--topbar-height);
+  background: var(--color-bg-surface);
+  border-bottom: 1px solid var(--color-border);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 16px;
+  z-index: 100;
+  position: relative;
+}
+
+#sidebar-toggle {
+  font-size: 1.1rem;
+  color: var(--color-text-muted);
+  padding: 4px 6px;
+  border-radius: var(--radius-sm);
+  transition: color 0.2s, background 0.2s;
+  flex-shrink: 0;
+}
+#sidebar-toggle:hover {
+  color: var(--color-text);
+  background: rgba(255,255,255,0.06);
+}
+
+#logo {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--color-accent);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+#search-input {
+  flex: 1;
+  max-width: 360px;
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: 6px 12px;
+  color: var(--color-text);
+  font-size: 0.85rem;
+  transition: border-color 0.2s;
+}
+#search-input:focus {
+  outline: none;
+  border-color: var(--color-accent);
+}
+#search-input::placeholder { color: var(--color-text-muted); }
+
+#topbar-right {
+  margin-left: auto;
+  display: flex;
+  gap: 6px;
+  flex-shrink: 0;
+}
+#topbar-right button {
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: 5px 10px;
+  font-size: 0.78rem;
+  color: var(--color-text-muted);
+  transition: color 0.15s, border-color 0.15s;
+}
+#topbar-right button:hover {
+  color: var(--color-text);
+  border-color: var(--color-accent);
+}
+
+/* ─────────────────────────────────────────
+   APP BODY
+───────────────────────────────────────── */
+#app {
+  display: flex;
+  height: calc(100vh - var(--topbar-height));
+  overflow: hidden;
+}
+
+/* ─────────────────────────────────────────
+   SIDEBAR
+───────────────────────────────────────── */
+#sidebar {
+  width: var(--sidebar-width);
+  min-width: var(--sidebar-width);
+  max-width: var(--sidebar-width);
+  background: var(--color-bg-surface);
+  border-right: 1px solid var(--color-border);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transition: width 0.3s ease, min-width 0.3s ease, max-width 0.3s ease;
+  flex-shrink: 0;
+}
+
+#sidebar.collapsed {
+  width: 0 !important;
+  min-width: 0 !important;
+  max-width: 0 !important;
+}
+
+#tree-scroll {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 12px 0 24px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-border) transparent;
+}
+#tree-scroll::-webkit-scrollbar { width: 4px; }
+#tree-scroll::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 2px;
+}
+
+/* ─────────────────────────────────────────
+   RESIZE HANDLE
+───────────────────────────────────────── */
+#resize-handle {
+  width: var(--handle-width);
+  background: var(--color-border);
+  cursor: col-resize;
+  flex-shrink: 0;
+  transition: background 0.2s;
+  position: relative;
+}
+#resize-handle:hover,
+#resize-handle.dragging {
+  background: var(--color-accent);
+}
+
+/* ─────────────────────────────────────────
+   CONTENT AREA
+───────────────────────────────────────── */
+#content {
+  flex: 1;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ─────────────────────────────────────────
+   WELCOME SCREEN
+───────────────────────────────────────── */
+#welcome {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+}
+
+#welcome.hidden { display: none; }
+
+#welcome-inner {
+  text-align: center;
+  max-width: 400px;
+}
+
+#welcome-icon {
+  font-size: 3rem;
+  margin-bottom: 16px;
+}
+
+#welcome-inner h1 {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--color-accent);
+  margin-bottom: 10px;
+}
+
+#welcome-inner p {
+  color: var(--color-text-muted);
+  font-size: 0.92rem;
+  margin-bottom: 24px;
+}
+
+#welcome-hints {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  text-align: left;
+}
+
+#welcome-hints span {
+  background: var(--color-bg-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: 8px 14px;
+  font-size: 0.82rem;
+  color: var(--color-text-muted);
+}
+
+/* ─────────────────────────────────────────
+   STUDY PANEL (right side, full height)
+───────────────────────────────────────── */
+#study-panel {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--color-bg-panel);
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+#study-panel.panel-hidden {
+  display: none;
+}
+
+/* ─────────────────────────────────────────
+   MOBILE
+───────────────────────────────────────── */
+@media (max-width: 640px) {
+  :root { --sidebar-width: 260px; }
+
+  #topbar-right { display: none; }
+
+  #sidebar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    z-index: 50;
+    box-shadow: var(--shadow-soft);
+  }
+
+  #resize-handle { display: none; }
+}

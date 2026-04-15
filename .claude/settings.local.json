@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(dir \"C:\\\\Users\\\\Aryan\\\\Desktop\\\\New folder\")",
+      "Bash(dir \"C:\\\\Users\\\\Aryan\\\\.claude\\\\projects\\\\C--Users-Aryan-Desktop-New-folder\\\\memory\")",
+      "Bash(cmd:*)"
+    ]
+  }
+}

@@ -1,0 +1,149 @@
+/* animations.css — tutte le animazioni e transizioni */
+
+/* ─────────────────────────────────────────
+   ENTRATA NODI (nuovo ramo che appare)
+───────────────────────────────────────── */
+@keyframes node-enter {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.5);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+.tree-node.entering {
+  animation: node-enter 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+/* ─────────────────────────────────────────
+   USCITA NODI (ramo che collassa)
+───────────────────────────────────────── */
+@keyframes node-exit {
+  from {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.4);
+  }
+}
+
+.tree-node.exiting {
+  animation: node-exit 0.22s ease-in forwards;
+  pointer-events: none;
+}
+
+/* ─────────────────────────────────────────
+   LINEA SVG — DISEGNA SE STESSA
+───────────────────────────────────────── */
+@keyframes line-draw {
+  from { stroke-dashoffset: var(--line-length); }
+  to   { stroke-dashoffset: 0; }
+}
+
+.tree-line.line-drawing {
+  stroke-dasharray: var(--line-length);
+  stroke-dashoffset: var(--line-length);
+  animation: line-draw 0.35s ease-out forwards;
+}
+
+@keyframes line-erase {
+  from { stroke-dashoffset: 0; }
+  to   { stroke-dashoffset: var(--line-length); }
+}
+
+.tree-line.line-erasing {
+  stroke-dasharray: var(--line-length);
+  animation: line-erase 0.2s ease-in forwards;
+}
+
+/* ─────────────────────────────────────────
+   NODO PULSANTE (nodo attivo / appena aperto)
+───────────────────────────────────────── */
+@keyframes pulse-ring {
+  0%   { box-shadow: 0 0 0 0 var(--color-accent-glow); }
+  70%  { box-shadow: 0 0 0 10px rgba(108, 99, 255, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(108, 99, 255, 0); }
+}
+
+.tree-node.node-active {
+  animation: pulse-ring 1.5s ease-out infinite;
+}
+
+/* ─────────────────────────────────────────
+   RICERCA — HIGHLIGHT LAMPEGGIO
+───────────────────────────────────────── */
+@keyframes pulse-highlight {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(251, 191, 36, 0); }
+  50%       { box-shadow: 0 0 12px 2px rgba(251, 191, 36, 0.35); }
+}
+
+/* ─────────────────────────────────────────
+   STUDIO PANEL — SLIDE UP / DOWN
+   (gestita in layout.css con translateY)
+───────────────────────────────────────── */
+
+/* Sezioni accordion — espandi/chiudi */
+.section-content {
+  overflow: hidden;
+  max-height: 2000px;
+  transition: max-height 0.35s ease, opacity 0.25s ease;
+  opacity: 1;
+}
+
+.section-content.hidden {
+  max-height: 0;
+  opacity: 0;
+}
+
+/* Tab subtopic — ingresso */
+@keyframes tab-enter {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+#panel-subtopic-tabs.refreshing .subtopic-tab {
+  animation: tab-enter 0.2s ease forwards;
+}
+
+/* Freccia section toggle */
+.section-arrow {
+  transition: transform 0.25s;
+  display: inline-block;
+}
+
+.section-toggle[aria-expanded="true"] .section-arrow {
+  transform: rotate(180deg);
+}
+
+/* ─────────────────────────────────────────
+   LOADING SHIMMER (per content in caricamento)
+───────────────────────────────────────── */
+@keyframes shimmer {
+  from { background-position: -600px 0; }
+  to   { background-position: 600px 0; }
+}
+
+.loading-shimmer {
+  background: linear-gradient(
+    90deg,
+    var(--color-bg-surface) 25%,
+    var(--color-border) 50%,
+    var(--color-bg-surface) 75%
+  );
+  background-size: 600px 100%;
+  animation: shimmer 1.2s infinite linear;
+  border-radius: var(--radius-sm);
+  height: 14px;
+  margin-bottom: 8px;
+}

@@ -1,0 +1,182 @@
+/* tree.css — sidebar collapsible tree */
+
+/* ─────────────────────────────────────────
+   LIST RESET
+───────────────────────────────────────── */
+#tree-root,
+.tree-children {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* ─────────────────────────────────────────
+   TREE ITEM WRAPPER
+───────────────────────────────────────── */
+.tree-item {
+  display: block;
+}
+
+/* ─────────────────────────────────────────
+   NODE ROW  (the clickable line)
+───────────────────────────────────────── */
+.tree-node {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 12px;
+  cursor: pointer;
+  border-radius: 0;
+  user-select: none;
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+  transition: background 0.15s, color 0.15s;
+  position: relative;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tree-node:hover {
+  background: rgba(255,255,255,0.05);
+  color: var(--color-text);
+}
+
+/* Active topic */
+.tree-node.node-active {
+  background: rgba(108, 99, 255, 0.15);
+  color: var(--color-accent) !important;
+}
+
+/* Completed topic */
+.tree-node.node-done .node-label::after {
+  content: ' ✓';
+  color: var(--color-level-3);
+  font-size: 0.7rem;
+}
+
+/* Search highlight */
+.tree-node.node-highlighted {
+  background: rgba(251, 191, 36, 0.12) !important;
+  color: #fbbf24 !important;
+}
+
+.tree-node.node-dimmed {
+  opacity: 0.3;
+}
+
+/* ─────────────────────────────────────────
+   LEVEL INDENTATION & COLOURS
+───────────────────────────────────────── */
+
+/* Level 0 — Root */
+.tree-item--level-0 > .tree-node {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--color-level-0);
+  padding: 10px 12px;
+  letter-spacing: 0.02em;
+}
+
+/* Level 1 — Liceo */
+.tree-item--level-1 > .tree-node {
+  padding-left: 16px;
+  font-weight: 600;
+  color: var(--color-level-1);
+  font-size: 0.86rem;
+}
+
+/* Level 2 — Materia */
+.tree-item--level-2 > .tree-node {
+  padding-left: 32px;
+  color: var(--color-level-2);
+  font-size: 0.84rem;
+}
+
+/* Level 3 — Argomento/Topic */
+.tree-item--level-3 > .tree-node {
+  padding-left: 48px;
+  color: var(--color-level-3);
+  font-size: 0.82rem;
+}
+
+/* Level 4 — Subtopic foglia */
+.tree-item--level-4 > .tree-node {
+  padding-left: 64px;
+  color: var(--color-level-4);
+  font-size: 0.8rem;
+}
+
+/* ─────────────────────────────────────────
+   VERTICAL INDENT LINE
+   (the │ line shown next to open branches)
+───────────────────────────────────────── */
+.tree-item--level-1 > .tree-children,
+.tree-item--level-2 > .tree-children,
+.tree-item--level-3 > .tree-children {
+  border-left: 1px solid var(--color-border);
+  margin-left: 22px;
+}
+
+.tree-item--level-1 > .tree-children { margin-left: 22px; }
+.tree-item--level-2 > .tree-children { margin-left: 38px; }
+.tree-item--level-3 > .tree-children { margin-left: 54px; }
+
+/* ─────────────────────────────────────────
+   EXPAND / COLLAPSE ARROW
+───────────────────────────────────────── */
+.node-arrow {
+  font-size: 0.6rem;
+  flex-shrink: 0;
+  color: var(--color-text-muted);
+  transition: transform 0.2s ease;
+  width: 12px;
+  text-align: center;
+  display: inline-block;
+}
+
+.tree-node.node-open .node-arrow {
+  transform: rotate(90deg);
+}
+
+/* Leaf node (no children) — no arrow, use a dot instead */
+.node-arrow-leaf {
+  font-size: 0.45rem;
+  flex-shrink: 0;
+  color: var(--color-text-muted);
+  width: 12px;
+  text-align: center;
+  opacity: 0.5;
+}
+
+/* ─────────────────────────────────────────
+   CHILDREN LIST — EXPAND / COLLAPSE
+───────────────────────────────────────── */
+.tree-children {
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 0.28s ease;
+}
+
+.tree-children.open {
+  max-height: 9999px;   /* large enough to never clip */
+  transition: max-height 0.35s ease;
+}
+
+/* ─────────────────────────────────────────
+   NODE LABEL
+───────────────────────────────────────── */
+.node-label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  flex: 1;
+}
+
+/* ─────────────────────────────────────────
+   SEPARATOR between root and level-1 items
+───────────────────────────────────────── */
+.tree-item--level-0 > .tree-node {
+  border-bottom: 1px solid var(--color-border);
+  margin-bottom: 4px;
+}

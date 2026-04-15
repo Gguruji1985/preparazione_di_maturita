@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Maturità Prep</title>
+  <link rel="stylesheet" href="css/reset.css" />
+  <link rel="stylesheet" href="css/layout.css" />
+  <link rel="stylesheet" href="css/tree.css" />
+  <link rel="stylesheet" href="css/animations.css" />
+  <link rel="stylesheet" href="css/study-panel.css" />
+</head>
+<body>
+
+  <!-- TOP BAR -->
+  <header id="topbar">
+    <button id="sidebar-toggle" aria-label="Apri/chiudi sidebar">☰</button>
+    <span id="logo">Maturità Prep</span>
+    <input type="text" id="search-input" placeholder="Cerca argomento..." autocomplete="off" />
+    <div id="topbar-right">
+      <button id="btn-collapse-all">Chiudi tutto</button>
+      <button id="btn-expand-all">Apri tutto</button>
+    </div>
+  </header>
+
+  <!-- APP BODY: sidebar + content -->
+  <div id="app">
+
+    <!-- LEFT SIDEBAR: the tree -->
+    <nav id="sidebar">
+      <div id="tree-scroll">
+        <ul id="tree-root" role="tree"></ul>
+      </div>
+    </nav>
+
+    <!-- RESIZE HANDLE -->
+    <div id="resize-handle" title="Trascina per ridimensionare"></div>
+
+    <!-- RIGHT CONTENT: welcome screen or study panel -->
+    <main id="content">
+
+      <!-- Shown when no topic is selected -->
+      <div id="welcome">
+        <div id="welcome-inner">
+          <div id="welcome-icon">📚</div>
+          <h1>Maturità Prep</h1>
+          <p>Seleziona un argomento dalla barra laterale per iniziare a studiare.</p>
+          <div id="welcome-hints">
+            <span>▶ Clicca su un ramo per espanderlo</span>
+            <span>📄 Clicca su un argomento per aprirlo</span>
+            <span>🔍 Usa la barra di ricerca per trovare un topic</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Study panel — shown when a topic is clicked -->
+      <aside id="study-panel" class="panel-hidden" aria-live="polite">
+
+        <div id="panel-header">
+          <div id="panel-breadcrumb"></div>
+          <div id="panel-title-row">
+            <h2 id="panel-title"></h2>
+            <button id="panel-close-btn" aria-label="Chiudi pannello">✕</button>
+          </div>
+          <div id="panel-subtopic-tabs"></div>
+        </div>
+
+        <div id="panel-body">
+
+          <section class="panel-section" id="sec-spiegazione">
+            <button class="section-toggle" aria-expanded="true">
+              <span class="section-icon">📖</span> Spiegazione
+              <span class="section-arrow">▲</span>
+            </button>
+            <div class="section-content" id="content-spiegazione"></div>
+          </section>
+
+          <section class="panel-section" id="sec-domande">
+            <button class="section-toggle" aria-expanded="false">
+              <span class="section-icon">❓</span> Domande della Commissione
+              <span class="section-arrow">▼</span>
+            </button>
+            <div class="section-content hidden" id="content-domande"></div>
+          </section>
+
+          <section class="panel-section" id="sec-qa">
+            <button class="section-toggle" aria-expanded="false">
+              <span class="section-icon">💬</span> Domande &amp; Risposte
+              <span class="section-arrow">▼</span>
+            </button>
+            <div class="section-content hidden" id="content-qa"></div>
+          </section>
+
+          <section class="panel-section" id="sec-ricordare">
+            <button class="section-toggle" aria-expanded="false">
+              <span class="section-icon">✅</span> Da Ricordare
+              <span class="section-arrow">▼</span>
+            </button>
+            <div class="section-content hidden" id="content-ricordare"></div>
+          </section>
+
+          <section class="panel-section" id="sec-non-dire">
+            <button class="section-toggle" aria-expanded="false">
+              <span class="section-icon">❌</span> Da Non Dire
+              <span class="section-arrow">▼</span>
+            </button>
+            <div class="section-content hidden" id="content-non-dire"></div>
+          </section>
+
+          <section class="panel-section" id="sec-raccomandazioni">
+            <button class="section-toggle" aria-expanded="false">
+              <span class="section-icon">💡</span> Raccomandazioni
+              <span class="section-arrow">▼</span>
+            </button>
+            <div class="section-content hidden" id="content-raccomandazioni"></div>
+          </section>
+
+        </div><!-- /panel-body -->
+
+      </aside>
+
+    </main>
+
+  </div><!-- /app -->
+
+  <script src="js/data.js"></script>
+
+  <!-- Preloaded data files (add new ones here as they are written) -->
+  <script src="data/informatica/informatica-basi-di-dati.js"></script>
+  <script src="data/informatica/informatica-reti.js"></script>
+  <script src="data/informatica/informatica-programmazione.js"></script>
+  <script src="data/informatica/informatica-sistemi-operativi.js"></script>
+  <script src="data/comune/ita-romanticismo.js"></script>
+  <script src="data/comune/sto-italia-repubblicana.js"></script>
+  <script src="data/comune/sto-guerra-fredda.js"></script>
+  <script src="data/comune/sto-ww2.js"></script>
+  <script src="data/comune/sto-totalitarismi.js"></script>
+  <script src="data/comune/sto-ww1.js"></script>
+  <script src="data/comune/ita-dopoguerra.js"></script>
+  <script src="data/comune/ita-novecento-prosa.js"></script>
+  <script src="data/comune/ita-decadentismo.js"></script>
+  <script src="data/comune/ita-verismo.js"></script>
+  <script src="data/comune/ita-origini.js"></script>
+  <script src="data/comune/fil-nietzsche.js"></script>
+  <script src="data/informatica/informatica-web.js"></script>
+  <script src="data/informatica/sistemi-reti-architetture.js"></script>
+  <script src="data/informatica/sistemi-reti-lan.js"></script>
+  <script src="data/informatica/sistemi-reti-protocolli.js"></script>
+  <script src="data/informatica/sistemi-reti-sicurezza.js"></script>
+  <script src="data/informatica/sistemi-reti-cloud.js"></script>
+  <script src="data/informatica/tpsit-concorrenza.js"></script>
+  <script src="data/informatica/tpsit-socket.js"></script>
+  <script src="data/informatica/tpsit-web-server.js"></script>
+  <script src="data/informatica/tpsit-webservices.js"></script>
+  <script src="data/informatica/tpsit-progettazione.js"></script>
+
+  <script src="js/tree-engine.js"></script>
+  <script src="js/study-panel.js"></script>
+  <script src="js/app.js"></script>
+
+</body>
+</html>
