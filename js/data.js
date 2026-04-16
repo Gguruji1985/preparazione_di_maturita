@@ -69,9 +69,10 @@ const TREE = {
           label: "Storia",
           level: 2,
           children: [
-            { id: "inf-sto-ww1",          label: "Prima Guerra Mondiale",  level: 3, dataFile: "data/comune/sto-ww1.js" },
-            { id: "inf-sto-totalit",      label: "Totalitarismi",          level: 3, dataFile: "data/comune/sto-totalitarismi.js" },
-            { id: "inf-sto-ww2",          label: "Seconda Guerra Mondiale",level: 3, dataFile: "data/comune/sto-ww2.js" },
+            { id: "inf-sto-ww1",          label: "Prima Guerra Mondiale",     level: 3, dataFile: "data/comune/sto-ww1.js" },
+            { id: "inf-sto-totalit",      label: "Totalitarismi",             level: 3, dataFile: "data/comune/sto-totalitarismi.js" },
+            { id: "inf-sto-gcs",          label: "Guerra Civile Spagnola",    level: 3, dataFile: "data/comune/sto-guerra-civile-spagna.js" },
+            { id: "inf-sto-ww2",          label: "Seconda Guerra Mondiale",   level: 3, dataFile: "data/comune/sto-ww2.js" },
             { id: "inf-sto-guerra-fredda",label: "Guerra Fredda",          level: 3, dataFile: "data/comune/sto-guerra-fredda.js" },
             { id: "inf-sto-italia-rep",   label: "Italia Repubblicana",    level: 3, dataFile: "data/comune/sto-italia-repubblicana.js" },
           ]
@@ -172,8 +173,9 @@ const TREE = {
             { id: "sci-sto-fine-800",     label: "Fine Ottocento",         level: 3, dataFile: "data/comune/sto-fine-ottocento.js" },
             { id: "sci-sto-belle-epoque", label: "Belle Époque",           level: 3, dataFile: "data/comune/sto-belle-epoque.js" },
             { id: "sci-sto-ww1",          label: "Prima Guerra Mondiale",  level: 3, dataFile: "data/comune/sto-ww1.js" },
-            { id: "sci-sto-totalit",      label: "Totalitarismi",          level: 3, dataFile: "data/comune/sto-totalitarismi.js" },
-            { id: "sci-sto-ww2",          label: "Seconda Guerra Mondiale",level: 3, dataFile: "data/comune/sto-ww2.js" },
+            { id: "sci-sto-totalit",      label: "Totalitarismi",            level: 3, dataFile: "data/comune/sto-totalitarismi.js" },
+            { id: "sci-sto-gcs",          label: "Guerra Civile Spagnola",   level: 3, dataFile: "data/comune/sto-guerra-civile-spagna.js" },
+            { id: "sci-sto-ww2",          label: "Seconda Guerra Mondiale",  level: 3, dataFile: "data/comune/sto-ww2.js" },
             { id: "sci-sto-guerra-fredda",label: "Guerra Fredda",          level: 3, dataFile: "data/comune/sto-guerra-fredda.js" },
             { id: "sci-sto-italia-rep",   label: "Italia Repubblicana",    level: 3, dataFile: "data/comune/sto-italia-repubblicana.js" },
           ]
@@ -263,8 +265,9 @@ const TREE = {
             { id: "cla-sto-fine-800",     label: "Fine Ottocento",         level: 3, dataFile: "data/comune/sto-fine-ottocento.js" },
             { id: "cla-sto-belle-epoque", label: "Belle Époque",           level: 3, dataFile: "data/comune/sto-belle-epoque.js" },
             { id: "cla-sto-ww1",          label: "Prima Guerra Mondiale",  level: 3, dataFile: "data/comune/sto-ww1.js" },
-            { id: "cla-sto-totalit",      label: "Totalitarismi",          level: 3, dataFile: "data/comune/sto-totalitarismi.js" },
-            { id: "cla-sto-ww2",          label: "Seconda Guerra Mondiale",level: 3, dataFile: "data/comune/sto-ww2.js" },
+            { id: "cla-sto-totalit",      label: "Totalitarismi",            level: 3, dataFile: "data/comune/sto-totalitarismi.js" },
+            { id: "cla-sto-gcs",          label: "Guerra Civile Spagnola",   level: 3, dataFile: "data/comune/sto-guerra-civile-spagna.js" },
+            { id: "cla-sto-ww2",          label: "Seconda Guerra Mondiale",  level: 3, dataFile: "data/comune/sto-ww2.js" },
             { id: "cla-sto-guerra-fredda",label: "Guerra Fredda",          level: 3, dataFile: "data/comune/sto-guerra-fredda.js" },
             { id: "cla-sto-italia-rep",   label: "Italia Repubblicana",    level: 3, dataFile: "data/comune/sto-italia-repubblicana.js" },
           ]

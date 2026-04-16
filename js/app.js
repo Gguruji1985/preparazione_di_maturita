@@ -134,6 +134,7 @@ document.addEventListener('DOMContentLoaded', () => {
     'data/comune/sto-belle-epoque.js':      'TOPIC_STO_BELLE_EPOQUE',
     'data/comune/sto-ww1.js':              'TOPIC_STO_WW1',
     'data/comune/sto-totalitarismi.js':    'TOPIC_STO_TOTALITARISMI',
+    'data/comune/sto-guerra-civile-spagna.js': 'TOPIC_STO_GUERRA_CIVILE_SPAGNA',
     'data/comune/sto-ww2.js':              'TOPIC_STO_WW2',
     'data/comune/sto-guerra-fredda.js':    'TOPIC_STO_GUERRA_FREDDA',
     'data/comune/sto-italia-repubblicana.js': 'TOPIC_STO_ITALIA_REP',

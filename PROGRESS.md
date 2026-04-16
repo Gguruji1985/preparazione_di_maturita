@@ -71,6 +71,7 @@ maturita-prep/
     │   ├── sto-belle-epoque.js
     │   ├── sto-ww1.js
     │   ├── sto-totalitarismi.js
+    │   ├── sto-guerra-civile-spagna.js
     │   ├── sto-ww2.js
     │   ├── sto-guerra-fredda.js
     │   ├── sto-italia-repubblicana.js
@@ -187,6 +188,7 @@ maturita-prep/
 | sto-belle-epoque.js | ⬜ TODO |
 | sto-ww1.js | ✅ DONE |
 | sto-totalitarismi.js | ✅ DONE |
+| sto-guerra-civile-spagna.js | ✅ DONE |
 | sto-ww2.js | ✅ DONE |
 | sto-guerra-fredda.js | ✅ DONE |
 | sto-italia-repubblicana.js | ✅ DONE |
