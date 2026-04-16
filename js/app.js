@@ -13,7 +13,10 @@ document.addEventListener('DOMContentLoaded', () => {
   // ─────────────────────────────────────────
   StudyPanel.init();
 
-  TreeEngine.init(TREE, handleTopicClick);
+  TreeEngine.init(TREE, (nodeData) => {
+    handleTopicClick(nodeData);
+    if (isMobile()) closeSidebar();
+  });
 
   // ─────────────────────────────────────────
   // GESTIONE CLICK SU UN TOPIC (foglia dell'albero)
@@ -263,12 +266,41 @@ document.addEventListener('DOMContentLoaded', () => {
   // ─────────────────────────────────────────
   // SIDEBAR TOGGLE (mobile / narrow view)
   // ─────────────────────────────────────────
-  const sidebarToggle = document.getElementById('sidebar-toggle');
-  const sidebar       = document.getElementById('sidebar');
+  const sidebarToggle  = document.getElementById('sidebar-toggle');
+  const sidebar        = document.getElementById('sidebar');
+  const sidebarOverlay = document.getElementById('sidebar-overlay');
+
+  function openSidebar() {
+    sidebar.classList.add('sidebar-open');
+    sidebarOverlay.classList.add('visible');
+  }
+
+  function closeSidebar() {
+    sidebar.classList.remove('sidebar-open');
+    sidebarOverlay.classList.remove('visible');
+  }
+
+  function isMobile() {
+    return window.innerWidth <= 640;
+  }
 
   sidebarToggle.addEventListener('click', () => {
-    sidebar.classList.toggle('sidebar-open');
+    if (sidebar.classList.contains('sidebar-open')) {
+      closeSidebar();
+    } else {
+      openSidebar();
+    }
   });
+
+  // Close sidebar when tapping the overlay
+  sidebarOverlay.addEventListener('click', closeSidebar);
+
+  // Auto-close sidebar on mobile when a topic is selected
+  const _origHandleTopicClick = handleTopicClick;
+  function handleTopicClickWithClose(nodeData) {
+    _origHandleTopicClick(nodeData);
+    if (isMobile()) closeSidebar();
+  }
 
   // ─────────────────────────────────────────
   // DRAG TO PAN — tieni premuto il mouse per spostare l'albero
