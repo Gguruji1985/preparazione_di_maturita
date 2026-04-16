@@ -410,6 +410,8 @@ Tabella virtuale definita da una SELECT. Non memorizza dati, li calcola ogni vol
       "WHERE = prima del raggruppamento | HAVING = dopo il raggruppamento",
       "Funzioni aggregate: COUNT, SUM, AVG, MAX, MIN",
       "VIEW = tabella virtuale, non memorizza dati",
+      "COUNT(col) esclude NULL | COUNT(*) include tutto | COUNT(DISTINCT col) valori unici",
+      "Regola visibilità aggregati: SELECT con aggregati → SOLO funzioni di aggregazione (senza GROUP BY)",
     ],
     daNonDire: [
       "Non dire che SQL e MySQL sono sinonimi — SQL è il linguaggio, MySQL è un DBMS",
@@ -521,7 +523,12 @@ Es: CodiceFiscale → Nome, Cognome, DataNascita
 Porta un esempio concreto: tabella Ordini con (IDOrdine, IDCliente, NomeCliente, IDProdotto, NomeProdotto, Quantità).
 Mostra passo per passo come portarla in 1NF, 2NF e 3NF decompandola.
 
-Questo esercizio pratico impressiona molto la commissione.
+Esempio avanzato con la tabella Incarichi — PK=(impiegato, progetto):
+- impiegato → livello: dipendenza PARZIALE → viola 2NF
+- ruolo → costo_orario: dipendenza TRANSITIVA → viola 3NF
+Soluzione finale in 3NF: 4 tabelle (Incarichi, Impiegati, Progetti, Ruoli).
+
+Questi esercizi pratici impressionano molto la commissione.
     `,
   },
 
@@ -692,136 +699,6 @@ poi il progetto ingegneristico (logico), poi si costruisce fisicamente (fisico).
     raccomandazioni: `
 Usa la metafora della casa: prima i disegni dell'architetto (concettuale), poi il progetto ingegneristico (logico), poi la costruzione con materiali specifici (fisico).
 Sottolinea sempre che le prime due fasi sono indipendenti dal DBMS — è un punto che distingue chi ha capito da chi ha solo memorizzato.
-    `,
-  },
-
-  // ─────────────────────────────────────────
-  // SUBTOPIC: Modelli Logici
-  // ─────────────────────────────────────────
-  "modelli-logici": {
-    titolo: "I Modelli Logici dei Dati",
-    spiegazione: `
-Esistono <strong>4 modelli logici</strong> per organizzare i dati in un database.
-
-<strong>Modello Gerarchico:</strong>
-- Struttura ad albero — nodi (entità) e archi (associazioni sempre 1:N)
-- Un figlio ha sempre UN SOLO padre
-- Limite: struttura rigida, causa ridondanza dei dati
-- Esempio: AGENTE → CLIENTE → ORDINE → RIGA → ARTICOLO
-
-<strong>Modello Reticolare:</strong>
-- Struttura a grafo orientato — estensione del gerarchico
-- Un record figlio può avere PIÙ padri → riduce la ridondanza
-- Limite: più complesso da implementare e interrogare
-
-<strong>Modello Relazionale (RDBMS) — LO STANDARD:</strong>
-- Struttura a tabelle (righe e colonne)
-- Basato sulla teoria matematica degli insiemi
-- Le operazioni agiscono su INSIEMI di record (non su singoli)
-- Standard de facto: MySQL, Oracle, PostgreSQL
-- Gerarchico e reticolare sono considerati OBSOLETI
-
-<strong>Modello a Oggetti (ODBMS):</strong>
-- I dati sono rappresentati come oggetti
-- Usato in contesti specializzati (es. Postgres, Jasmine CA)
-
-<strong>Perché ha vinto il modello relazionale?</strong>
-1. Definito teoricamente PRIMA di qualsiasi implementazione
-2. Opera su insiemi di record, non uno alla volta
-3. Il più vicino al modo naturale di pensare i dati
-    `,
-    domande: [
-      {
-        domanda: "Quali sono i modelli logici classici e perché il relazionale ha prevalso?",
-        risposta: "I modelli logici classici sono tre: gerarchico, reticolare e relazionale. Il gerarchico organizza i dati ad albero con un solo padre per figlio — è semplice ma rigido e genera ridondanza. Il reticolare è un'estensione che permette a un figlio di avere più padri, riducendo la ridondanza ma aumentando la complessità. Il relazionale usa tabelle ed è diventato lo standard per tre ragioni: fu definito teoricamente prima di qualsiasi implementazione, le sue operazioni agiscono su insiemi di record simultaneamente, ed è il più vicino al modo naturale di pensare i dati. Gerarchico e reticolare sono oggi considerati obsoleti."
-      },
-      {
-        domanda: "Qual è il limite principale del modello gerarchico?",
-        risposta: "Il limite principale è la rigidità della struttura ad albero: ogni nodo figlio può avere uno e un solo padre. Questo genera ridondanza quando lo stesso dato deve apparire sotto più rami (ad esempio lo stesso articolo in più ordini). Aggiornare quel dato richiede di modificarlo in tutti i punti dove è replicato, rischiando inconsistenza. Inoltre non riesce a modellare naturalmente le relazioni M:N."
-      }
-    ],
-    qa: [
-      { domanda: "Struttura del modello gerarchico?", risposta: "Albero — un solo padre per ogni figlio, associazioni 1:N." },
-      { domanda: "Struttura del modello reticolare?", risposta: "Grafo orientato — un figlio può avere più padri." },
-      { domanda: "Struttura del modello relazionale?", risposta: "Tabelle con righe e colonne — RDBMS." },
-      { domanda: "Gerarchico e reticolare sono ancora usati?", risposta: "No, sono considerati obsoleti. Lo standard è il relazionale." },
-    ],
-    daRicordare: [
-      "Gerarchico = albero, 1:N, un solo padre per figlio → ridondanza",
-      "Reticolare = grafo, un figlio può avere più padri → meno ridondanza",
-      "Relazionale = tabelle, standard de facto, SQL → RDBMS",
-      "Il relazionale fu definito teoricamente PRIMA di essere implementato",
-    ],
-    daNonDire: [
-      "Non dire che gerarchico e reticolare sono ancora usati — sono obsoleti",
-      "Non confondere il modello relazionale con SQL — il modello è la teoria, SQL è il linguaggio",
-    ],
-    raccomandazioni: `
-Usa l'esempio dell'azienda con AGENTE → CLIENTE → ORDINE per spiegare il gerarchico.
-Poi mostra il problema: lo stesso articolo in più ordini = dati ripetuti.
-Concludi con il relazionale che risolve tutto tramite chiavi esterne senza duplicazione.
-    `,
-  },
-
-  // ─────────────────────────────────────────
-  // SUBTOPIC: Relazioni come Tabelle
-  // ─────────────────────────────────────────
-  "relazioni-tabelle": {
-    titolo: "Relazioni come Tabelle — Fondamenti Matematici",
-    spiegazione: `
-Il modello relazionale si basa sulla <strong>teoria matematica degli insiemi</strong>.
-
-<strong>Prodotto Cartesiano:</strong>
-Dati n insiemi A1, A2, ..., An — il prodotto cartesiano è l'insieme di TUTTE
-le n-uple ordinate (a1, a2, ..., an) costruite prendendo un elemento da ciascun insieme.
-
-<strong>Relazione matematica:</strong>
-Un qualsiasi sottoinsieme del prodotto cartesiano.
-
-<strong>Terminologia fondamentale:</strong>
-- <strong>Grado</strong>: numero di colonne (domini coinvolti)
-- <strong>Dominio</strong>: l'insieme da cui provengono i valori di una colonna
-- <strong>n-upla / t-upla</strong>: una riga della tabella
-- <strong>Cardinalità</strong>: numero totale di righe
-
-<strong>Le 5 proprietà di una relazione:</strong>
-a) Tutte le righe hanno lo stesso numero di colonne
-b) Tutti gli attributi sono ATOMICI (un solo valore per cella, non scomponibile)
-c) I valori di una colonna appartengono tutti allo stesso dominio
-d) Non esistono due righe identiche — esiste sempre una chiave
-e) L'ordine delle righe non è significativo
-
-<strong>Esempio:</strong>
-A = {6, 2, 15}, B = {3, 25, 4, 8}
-Relazione R = "essere minore di": {(6,25), (2,3), (2,25), (2,4), (2,8), (15,25)}
-Grado = 2, Cardinalità = 6
-    `,
-    domande: [
-      {
-        domanda: "Cos'è una relazione nel modello relazionale e quali proprietà deve rispettare?",
-        risposta: "Una relazione è matematicamente un sottoinsieme del prodotto cartesiano di n insiemi (domini). Si rappresenta come una tabella: le colonne sono gli attributi, ogni riga è una n-upla. Deve rispettare 5 proprietà: tutte le righe hanno lo stesso numero di colonne; tutti gli attributi sono atomici (un solo valore per cella); i valori di ogni colonna appartengono allo stesso dominio; non esistono due righe identiche (esiste una chiave); l'ordine delle righe è irrilevante."
-      }
-    ],
-    qa: [
-      { domanda: "Cos'è il grado di una relazione?", risposta: "Il numero di colonne (attributi) della tabella." },
-      { domanda: "Cos'è la cardinalità di una relazione?", risposta: "Il numero di righe (t-uple) della tabella." },
-      { domanda: "Cosa significa attributo atomico?", risposta: "Ogni cella contiene un solo valore semplice non scomponibile." },
-      { domanda: "L'ordine delle righe è significativo?", risposta: "No, l'ordine delle righe è irrilevante nel modello relazionale." },
-    ],
-    daRicordare: [
-      "Grado = numero di COLONNE; Cardinalità = numero di RIGHE",
-      "Attributi ATOMICI = un solo valore per cella",
-      "Ogni riga è unica grazie alla PK",
-      "L'ordine delle righe NON ha significato",
-    ],
-    daNonDire: [
-      "Non confondere grado (colonne) con cardinalità (righe)",
-      "Non dire che l'ordine delle righe conta",
-    ],
-    raccomandazioni: `
-Usa l'esempio del campionato di calcio: A = {Juve, Napoli}, B = {PSP, Barca}, C = {1, x, 2}.
-Mostra il prodotto cartesiano e poi la relazione come sottoinsieme.
-Poi collega subito alla tabella: grado = numero di colonne, cardinalità = numero di righe.
     `,
   },
 
@@ -1028,149 +905,6 @@ Ogni dato è accessibile tramite: nome tabella + chiave + nome colonna.
 Usa l'esempio della biblioteca: ISBN è PK di LIBRI, id_editore è FK in LIBRI che punta alla PK di EDITORI.
 Concretizza il vincolo referenziale: "se inserisco un libro con id_editore = E999 ma E999 non esiste in EDITORI, il DBMS rifiuta l'operazione."
 Questo dimostra comprensione pratica, non solo teorica.
-    `,
-  },
-
-  // ─────────────────────────────────────────
-  // SUBTOPIC: Normalizzazione
-  // ─────────────────────────────────────────
-  "normalizzazione-avanzata": {
-    titolo: "Normalizzazione — 1NF, 2NF, 3NF, BCNF",
-    spiegazione: `
-La normalizzazione è un <strong>processo di decomposizione</strong> che elimina le ridondanze.
-
-<strong>Due requisiti per ogni decomposizione valida:</strong>
-1. Senza perdita di informazione: T = T1 ∪ T2 (si può sempre ricostruire l'originale)
-2. Conservazione delle dipendenze: i vincoli originali sono mantenuti
-
-<strong>Dipendenza Funzionale (X → Y):</strong>
-I valori di X determinano univocamente il valore di Y.
-- <strong>Completa</strong>: Y dipende da TUTTI gli attributi di X
-- <strong>Parziale</strong>: Y dipende solo da un SOTTOINSIEME di X
-- <strong>Transitiva</strong>: X → A → Y (Y non dipende direttamente dalla PK)
-- <strong>Banale</strong>: Y è sottoinsieme di X (sempre vera, non aggiunge info)
-
-<strong>1NF — Prima Forma Normale:</strong>
-- Tutti gli attributi ATOMICI (un solo valore per cella)
-- Esiste una chiave primaria
-
-<strong>2NF — Seconda Forma Normale:</strong>
-- In 1NF + nessuna dipendenza funzionale PARZIALE dalla PK
-- Rilevante solo se la PK è COMPOSTA
-- Problema classico: impiegato → livello con PK=(impiegato, progetto)
-
-<strong>3NF — Terza Forma Normale:</strong>
-- In 2NF + nessuna dipendenza funzionale TRANSITIVA
-- Problema classico: (imp,prog) → ruolo → costo_orario
-
-<strong>BCNF — Forma Normale Boyce-Codd:</strong>
-- In 3NF + per ogni DF non banale X → Y, X è SUPERCHIAVE
-- Più restrittiva della 3NF — gestisce anomalie con più chiavi candidate
-    `,
-    domande: [
-      {
-        domanda: "Spiega 1NF, 2NF e 3NF con esempi pratici.",
-        risposta: "La 1NF richiede attributi atomici e PK. Esempio violazione: attributo 'nominativo' che contiene nome e cognome — non è atomico. La 2NF richiede assenza di dipendenze parziali dalla PK (solo con PK composte). Esempio: tabella Incarichi con PK=(impiegato, progetto); l'attributo 'livello' dipende solo da 'impiegato' — dipendenza parziale, viola la 2NF. La 3NF richiede assenza di dipendenze transitive. Nella stessa tabella: (impiegato, progetto) → ruolo → costo_orario; costo_orario dipende da ruolo, non direttamente dalla PK — dipendenza transitiva, viola la 3NF."
-      },
-      {
-        domanda: "Cos'è la BCNF e in cosa differisce dalla 3NF?",
-        risposta: "La BCNF è più restrittiva: per ogni dipendenza funzionale non banale X → Y, X deve essere una superchiave. La 3NF permette eccezioni quando X fa parte di una chiave candidata. Esempio: tabella (docente, materia, studente) con 'docente → materia'. Le chiavi candidate sono (materia, studente) e (docente, studente). La dipendenza 'docente → materia' viola la BCNF perché 'docente' da solo non è superchiave, anche se è parte di una chiave candidata. La soluzione è decomporre in (docente, materia) e (docente, studente)."
-      }
-    ],
-    qa: [
-      { domanda: "Cosa richiede la 1NF?", risposta: "Attributi atomici (un valore per cella) + chiave primaria." },
-      { domanda: "Cosa richiede la 2NF?", risposta: "1NF + nessuna dipendenza funzionale parziale dalla PK." },
-      { domanda: "Cosa richiede la 3NF?", risposta: "2NF + nessuna dipendenza funzionale transitiva." },
-      { domanda: "Cosa richiede la BCNF?", risposta: "3NF + ogni determinante di ogni DF non banale è una superchiave." },
-      { domanda: "La 2NF è rilevante con PK semplice?", risposta: "No, con PK a singolo attributo la 2NF è automaticamente soddisfatta." },
-    ],
-    daRicordare: [
-      "1NF: attributi atomici + PK",
-      "2NF: no DF parziali (solo con PK composte)",
-      "3NF: no DF transitive",
-      "BCNF: ogni determinante è superchiave (più restrittiva della 3NF)",
-      "Decomposizione sempre: senza perdita + conserva dipendenze",
-    ],
-    daNonDire: [
-      "Non dire che la 2NF è rilevante anche con PK semplici",
-      "Non confondere dipendenza parziale (2NF) con dipendenza transitiva (3NF)",
-    ],
-    raccomandazioni: `
-Usa la tabella Incarichi come filo conduttore: PK=(impiegato, progetto), attributi: livello, budget, anno, ruolo, costo_orario.
-- impiegato → livello: parziale → viola 2NF
-- ruolo → costo_orario: transitiva → viola 3NF
-Soluzione finale: 4 tabelle separate (Incarichi, Impiegati, Progetti, Ruoli).
-Questo esempio copre tutto dalla 1NF alla 3NF in modo concreto.
-    `,
-  },
-
-  // ─────────────────────────────────────────
-  // SUBTOPIC: SQL e Funzioni di Aggregazione
-  // ─────────────────────────────────────────
-  "sql-aggregazione": {
-    titolo: "SQL e Funzioni di Aggregazione",
-    spiegazione: `
-<strong>SQL (Structured Query Language)</strong> è il linguaggio standard per i DBMS relazionali.
-È <strong>dichiarativo</strong>: si dice COSA si vuole, non COME ottenerlo.
-
-<strong>Le 3 parti di SQL:</strong>
-- <strong>DDL</strong> (Data Definition Language): struttura → CREATE TABLE, ALTER TABLE, DROP TABLE
-- <strong>DML</strong> (Data Manipulation Language): dati → SELECT, INSERT, UPDATE, DELETE
-- <strong>DCL</strong> (Data Control Language): permessi → GRANT, REVOKE
-
-<strong>Il comando SELECT implementa le 3 operazioni relazionali:</strong>
-- Proiezione: quali colonne mostrare (SELECT col1, col2)
-- Selezione: filtra righe (WHERE condizione)
-- Congiunzione: combina tabelle (JOIN ... ON ...)
-
-<strong>Funzioni di Aggregazione:</strong>
-Calcolano valori su INSIEMI di tuple (non su singole righe):
-- COUNT(colonna): conta valori NON NULL
-- COUNT(*): conta TUTTE le righe inclusi i NULL
-- COUNT(DISTINCT col): conta valori unici non NULL
-- SUM, MAX, MIN, AVG, STDEV, VARIANCE
-
-<strong>REGOLA CRITICA di visibilità:</strong>
-Nella SELECT con aggregazione, la lista colonne può contenere SOLO funzioni di aggregazione.
-NON si possono mescolare colonne normali e funzioni di aggregazione senza GROUP BY.
-
-<strong>Esempio COUNT — tabella Imp sede S01 (4 impiegati, 2 con stipendio NULL):</strong>
-- COUNT(Stipendio) = 3 (esclude NULL)
-- COUNT(*) = 4 (include tutto)
-- COUNT(DISTINCT Stipendio) = 2 (valori unici non NULL)
-    `,
-    domande: [
-      {
-        domanda: "Qual è la differenza tra COUNT(colonna), COUNT(*) e COUNT(DISTINCT col)?",
-        risposta: "COUNT(colonna) conta solo le righe dove la colonna specificata ha un valore non NULL, escludendo quindi le righe con valori vuoti. COUNT(*) conta tutte le righe della tabella indipendentemente dalla presenza di NULL in qualsiasi colonna. COUNT(DISTINCT colonna) conta solo i valori distinti e non NULL nella colonna. Esempio pratico: sede S01 con 4 impiegati di cui 2 con stipendio NULL — COUNT(Stipendio)=3, COUNT(*)=4, COUNT(DISTINCT Stipendio)=2 se i due stipendi non nulli sono diversi tra loro."
-      },
-      {
-        domanda: "Cos'è la regola di visibilità delle funzioni di aggregazione?",
-        risposta: "La regola stabilisce che in una SELECT con funzioni di aggregazione, la lista delle colonne può contenere esclusivamente altre funzioni di aggregazione — non colonne normali. Questo perché le funzioni di aggregazione restituiscono un singolo valore per l'intero insieme di righe, mentre una colonna normale restituisce un valore per ogni riga: semanticamente incompatibili. Per usare sia colonne normali che aggregazioni insieme è necessario GROUP BY."
-      }
-    ],
-    qa: [
-      { domanda: "COUNT(colonna) esclude i NULL?", risposta: "Sì, COUNT(colonna) esclude i valori NULL." },
-      { domanda: "COUNT(*) include i NULL?", risposta: "Sì, COUNT(*) conta tutte le righe incluse quelle con NULL." },
-      { domanda: "DISTINCT funziona con COUNT(*)?", risposta: "No, DISTINCT si usa solo con COUNT(colonna), mai con COUNT(*)." },
-      { domanda: "SQL è un linguaggio procedurale?", risposta: "No, è dichiarativo: si specifica COSA ottenere, non COME." },
-      { domanda: "DDL, DML, DCL — esempi?", risposta: "DDL: CREATE TABLE; DML: SELECT, INSERT; DCL: GRANT, REVOKE." },
-    ],
-    daRicordare: [
-      "COUNT(col) esclude NULL; COUNT(*) include tutto; COUNT(DISTINCT col) valori unici",
-      "Regola di visibilità: SELECT con aggregati → SOLO funzioni di aggregazione (senza GROUP BY)",
-      "SQL è DICHIARATIVO: dici COSA, non COME",
-      "SELECT implementa: proiezione + selezione + join",
-    ],
-    daNonDire: [
-      "Non dire che COUNT(*) esclude i NULL — li include tutti",
-      "Non mescolare colonne normali e aggregazioni senza GROUP BY",
-    ],
-    raccomandazioni: `
-Il COUNT è la funzione più probabile all'esame.
-Prepara l'esempio concreto: sede S01, 4 impiegati, 2 con stipendio NULL.
-COUNT(Stipendio)=3, COUNT(*)=4, COUNT(DISTINCT Stipendio)=2.
-Commenta ogni risultato — dimostra comprensione reale.
     `,
   },
 
