@@ -90,6 +90,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const FILE_TO_VAR = {
     // Informatica
     'data/informatica/informatica-basi-di-dati.js':   'TOPIC_BASI_DI_DATI',
+    'data/informatica/informatica-progettazione-logica.js': 'TOPIC_PROGETTAZIONE_LOGICA',
     'data/informatica/informatica-reti.js':            'TOPIC_RETI',
     'data/informatica/informatica-programmazione.js':  'TOPIC_PROGRAMMAZIONE',
     'data/informatica/informatica-sistemi-operativi.js': 'TOPIC_SISTEMI_OPERATIVI',

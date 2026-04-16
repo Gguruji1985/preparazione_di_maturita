@@ -21,6 +21,7 @@ const TREE = {
           level: 2,
           children: [
             { id: "inf-inf-database",      label: "Basi di Dati",        level: 3, dataFile: "data/informatica/informatica-basi-di-dati.js" },
+            { id: "inf-inf-prog-logica",   label: "Progettazione Logica",level: 3, dataFile: "data/informatica/informatica-progettazione-logica.js" },
             { id: "inf-inf-reti",          label: "Reti e Internet",     level: 3, dataFile: "data/informatica/informatica-reti.js" },
             { id: "inf-inf-programmazione",label: "Programmazione",      level: 3, dataFile: "data/informatica/informatica-programmazione.js" },
             { id: "inf-inf-so",            label: "Sistemi Operativi",   level: 3, dataFile: "data/informatica/informatica-sistemi-operativi.js" },
