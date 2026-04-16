@@ -634,4 +634,616 @@ Struttura ideale della risposta:
     `,
   },
 
+  // ─────────────────────────────────────────
+  // SUBTOPIC: Le 3 Fasi della Progettazione
+  // ─────────────────────────────────────────
+  "fasi-progettazione": {
+    titolo: "Le 3 Fasi della Progettazione",
+    spiegazione: `
+La progettazione di un database segue un processo strutturato in <strong>3 fasi</strong>.
+Immagina di costruire una casa: prima si disegnano i piani architettonici (concettuale),
+poi il progetto ingegneristico (logico), poi si costruisce fisicamente (fisico).
+
+<strong>Fase 1 — Progettazione Concettuale:</strong>
+- Input: requisiti del sistema informativo (documenti, moduli, regole di business)
+- Output: Schema E/R (diagramma Entità-Relazione)
+- Risponde alla domanda: COSA rappresentare
+- Completamente indipendente dal DBMS usato
+
+<strong>Fase 2 — Progettazione Logica:</strong>
+- Input: Schema E/R
+- Output: Schema Logico — insieme di tabelle con colonne e chiavi
+- Risponde alla domanda: COME strutturare i dati in tabelle
+- Ancora indipendente dal DBMS specifico
+- Include la normalizzazione per eliminare la ridondanza
+
+<strong>Fase 3 — Progettazione Fisica:</strong>
+- Input: Schema Logico
+- Output: Schema Fisico con comandi DDL (CREATE TABLE, ecc.)
+- Dipende dal DBMS scelto (MySQL, Oracle, PostgreSQL...)
+- È l'unica fase DBMS-dipendente
+    `,
+    domande: [
+      {
+        domanda: "Quali sono le 3 fasi della progettazione di un database e cosa producono?",
+        risposta: "La progettazione si articola in tre fasi. La prima è la progettazione concettuale: produce lo Schema E/R partendo dai requisiti, ed è completamente indipendente dal DBMS. La seconda è la progettazione logica: traduce lo Schema E/R in tabelle relazionali applicando le regole di derivazione e la normalizzazione; è ancora indipendente dal DBMS. La terza è la progettazione fisica: trasforma lo schema logico in comandi DDL specifici per il DBMS scelto (MySQL, Oracle, ecc.) e dipende dall'implementazione concreta."
+      },
+      {
+        domanda: "Perché la progettazione logica è indipendente dal DBMS?",
+        risposta: "La progettazione logica produce uno schema relazionale astratto — tabelle con attributi, chiavi primarie e chiavi esterne — senza specificare come i dati saranno fisicamente memorizzati. Il modello relazionale è uno standard teorico: le stesse tabelle possono essere create su MySQL, Oracle o PostgreSQL con minime differenze sintattiche. Solo nella progettazione fisica si sceglie il DBMS e si generano i comandi DDL specifici."
+      }
+    ],
+    qa: [
+      { domanda: "Cosa produce la progettazione concettuale?", risposta: "Lo Schema E/R, indipendente dal DBMS." },
+      { domanda: "Cosa produce la progettazione logica?", risposta: "Lo Schema Logico: tabelle con attributi, PK e FK." },
+      { domanda: "Cosa produce la progettazione fisica?", risposta: "Lo Schema Fisico con comandi DDL specifici per il DBMS scelto." },
+      { domanda: "Quale fase dipende dal DBMS scelto?", risposta: "Solo la progettazione fisica." },
+    ],
+    daRicordare: [
+      "Concettuale = COSA rappresentare → Schema E/R",
+      "Logica = COME strutturare in tabelle → Schema Logico",
+      "Fisica = DBMS-specifica → Schema Fisico con DDL",
+      "Solo la fase fisica dipende dal DBMS scelto",
+    ],
+    daNonDire: [
+      "Non dire che la progettazione logica dipende dal DBMS — è ancora indipendente",
+      "Non confondere schema E/R (concettuale) con schema logico (tabelle)",
+    ],
+    raccomandazioni: `
+Usa la metafora della casa: prima i disegni dell'architetto (concettuale), poi il progetto ingegneristico (logico), poi la costruzione con materiali specifici (fisico).
+Sottolinea sempre che le prime due fasi sono indipendenti dal DBMS — è un punto che distingue chi ha capito da chi ha solo memorizzato.
+    `,
+  },
+
+  // ─────────────────────────────────────────
+  // SUBTOPIC: Modelli Logici
+  // ─────────────────────────────────────────
+  "modelli-logici": {
+    titolo: "I Modelli Logici dei Dati",
+    spiegazione: `
+Esistono <strong>4 modelli logici</strong> per organizzare i dati in un database.
+
+<strong>Modello Gerarchico:</strong>
+- Struttura ad albero — nodi (entità) e archi (associazioni sempre 1:N)
+- Un figlio ha sempre UN SOLO padre
+- Limite: struttura rigida, causa ridondanza dei dati
+- Esempio: AGENTE → CLIENTE → ORDINE → RIGA → ARTICOLO
+
+<strong>Modello Reticolare:</strong>
+- Struttura a grafo orientato — estensione del gerarchico
+- Un record figlio può avere PIÙ padri → riduce la ridondanza
+- Limite: più complesso da implementare e interrogare
+
+<strong>Modello Relazionale (RDBMS) — LO STANDARD:</strong>
+- Struttura a tabelle (righe e colonne)
+- Basato sulla teoria matematica degli insiemi
+- Le operazioni agiscono su INSIEMI di record (non su singoli)
+- Standard de facto: MySQL, Oracle, PostgreSQL
+- Gerarchico e reticolare sono considerati OBSOLETI
+
+<strong>Modello a Oggetti (ODBMS):</strong>
+- I dati sono rappresentati come oggetti
+- Usato in contesti specializzati (es. Postgres, Jasmine CA)
+
+<strong>Perché ha vinto il modello relazionale?</strong>
+1. Definito teoricamente PRIMA di qualsiasi implementazione
+2. Opera su insiemi di record, non uno alla volta
+3. Il più vicino al modo naturale di pensare i dati
+    `,
+    domande: [
+      {
+        domanda: "Quali sono i modelli logici classici e perché il relazionale ha prevalso?",
+        risposta: "I modelli logici classici sono tre: gerarchico, reticolare e relazionale. Il gerarchico organizza i dati ad albero con un solo padre per figlio — è semplice ma rigido e genera ridondanza. Il reticolare è un'estensione che permette a un figlio di avere più padri, riducendo la ridondanza ma aumentando la complessità. Il relazionale usa tabelle ed è diventato lo standard per tre ragioni: fu definito teoricamente prima di qualsiasi implementazione, le sue operazioni agiscono su insiemi di record simultaneamente, ed è il più vicino al modo naturale di pensare i dati. Gerarchico e reticolare sono oggi considerati obsoleti."
+      },
+      {
+        domanda: "Qual è il limite principale del modello gerarchico?",
+        risposta: "Il limite principale è la rigidità della struttura ad albero: ogni nodo figlio può avere uno e un solo padre. Questo genera ridondanza quando lo stesso dato deve apparire sotto più rami (ad esempio lo stesso articolo in più ordini). Aggiornare quel dato richiede di modificarlo in tutti i punti dove è replicato, rischiando inconsistenza. Inoltre non riesce a modellare naturalmente le relazioni M:N."
+      }
+    ],
+    qa: [
+      { domanda: "Struttura del modello gerarchico?", risposta: "Albero — un solo padre per ogni figlio, associazioni 1:N." },
+      { domanda: "Struttura del modello reticolare?", risposta: "Grafo orientato — un figlio può avere più padri." },
+      { domanda: "Struttura del modello relazionale?", risposta: "Tabelle con righe e colonne — RDBMS." },
+      { domanda: "Gerarchico e reticolare sono ancora usati?", risposta: "No, sono considerati obsoleti. Lo standard è il relazionale." },
+    ],
+    daRicordare: [
+      "Gerarchico = albero, 1:N, un solo padre per figlio → ridondanza",
+      "Reticolare = grafo, un figlio può avere più padri → meno ridondanza",
+      "Relazionale = tabelle, standard de facto, SQL → RDBMS",
+      "Il relazionale fu definito teoricamente PRIMA di essere implementato",
+    ],
+    daNonDire: [
+      "Non dire che gerarchico e reticolare sono ancora usati — sono obsoleti",
+      "Non confondere il modello relazionale con SQL — il modello è la teoria, SQL è il linguaggio",
+    ],
+    raccomandazioni: `
+Usa l'esempio dell'azienda con AGENTE → CLIENTE → ORDINE per spiegare il gerarchico.
+Poi mostra il problema: lo stesso articolo in più ordini = dati ripetuti.
+Concludi con il relazionale che risolve tutto tramite chiavi esterne senza duplicazione.
+    `,
+  },
+
+  // ─────────────────────────────────────────
+  // SUBTOPIC: Relazioni come Tabelle
+  // ─────────────────────────────────────────
+  "relazioni-tabelle": {
+    titolo: "Relazioni come Tabelle — Fondamenti Matematici",
+    spiegazione: `
+Il modello relazionale si basa sulla <strong>teoria matematica degli insiemi</strong>.
+
+<strong>Prodotto Cartesiano:</strong>
+Dati n insiemi A1, A2, ..., An — il prodotto cartesiano è l'insieme di TUTTE
+le n-uple ordinate (a1, a2, ..., an) costruite prendendo un elemento da ciascun insieme.
+
+<strong>Relazione matematica:</strong>
+Un qualsiasi sottoinsieme del prodotto cartesiano.
+
+<strong>Terminologia fondamentale:</strong>
+- <strong>Grado</strong>: numero di colonne (domini coinvolti)
+- <strong>Dominio</strong>: l'insieme da cui provengono i valori di una colonna
+- <strong>n-upla / t-upla</strong>: una riga della tabella
+- <strong>Cardinalità</strong>: numero totale di righe
+
+<strong>Le 5 proprietà di una relazione:</strong>
+a) Tutte le righe hanno lo stesso numero di colonne
+b) Tutti gli attributi sono ATOMICI (un solo valore per cella, non scomponibile)
+c) I valori di una colonna appartengono tutti allo stesso dominio
+d) Non esistono due righe identiche — esiste sempre una chiave
+e) L'ordine delle righe non è significativo
+
+<strong>Esempio:</strong>
+A = {6, 2, 15}, B = {3, 25, 4, 8}
+Relazione R = "essere minore di": {(6,25), (2,3), (2,25), (2,4), (2,8), (15,25)}
+Grado = 2, Cardinalità = 6
+    `,
+    domande: [
+      {
+        domanda: "Cos'è una relazione nel modello relazionale e quali proprietà deve rispettare?",
+        risposta: "Una relazione è matematicamente un sottoinsieme del prodotto cartesiano di n insiemi (domini). Si rappresenta come una tabella: le colonne sono gli attributi, ogni riga è una n-upla. Deve rispettare 5 proprietà: tutte le righe hanno lo stesso numero di colonne; tutti gli attributi sono atomici (un solo valore per cella); i valori di ogni colonna appartengono allo stesso dominio; non esistono due righe identiche (esiste una chiave); l'ordine delle righe è irrilevante."
+      }
+    ],
+    qa: [
+      { domanda: "Cos'è il grado di una relazione?", risposta: "Il numero di colonne (attributi) della tabella." },
+      { domanda: "Cos'è la cardinalità di una relazione?", risposta: "Il numero di righe (t-uple) della tabella." },
+      { domanda: "Cosa significa attributo atomico?", risposta: "Ogni cella contiene un solo valore semplice non scomponibile." },
+      { domanda: "L'ordine delle righe è significativo?", risposta: "No, l'ordine delle righe è irrilevante nel modello relazionale." },
+    ],
+    daRicordare: [
+      "Grado = numero di COLONNE; Cardinalità = numero di RIGHE",
+      "Attributi ATOMICI = un solo valore per cella",
+      "Ogni riga è unica grazie alla PK",
+      "L'ordine delle righe NON ha significato",
+    ],
+    daNonDire: [
+      "Non confondere grado (colonne) con cardinalità (righe)",
+      "Non dire che l'ordine delle righe conta",
+    ],
+    raccomandazioni: `
+Usa l'esempio del campionato di calcio: A = {Juve, Napoli}, B = {PSP, Barca}, C = {1, x, 2}.
+Mostra il prodotto cartesiano e poi la relazione come sottoinsieme.
+Poi collega subito alla tabella: grado = numero di colonne, cardinalità = numero di righe.
+    `,
+  },
+
+  // ─────────────────────────────────────────
+  // SUBTOPIC: Ristrutturazione E/R
+  // ─────────────────────────────────────────
+  "ristrutturazione-er": {
+    titolo: "Ristrutturazione E/R — I 5 Passi",
+    spiegazione: `
+Prima di tradurre uno schema E/R in tabelle, è <strong>obbligatorio ristrutturarlo</strong>.
+Lo schema E/R contiene elementi che non possono essere convertiti direttamente in tabelle.
+
+<strong>I 5 Passi di Ristrutturazione:</strong>
+
+<strong>1. Analisi delle Ridondanze:</strong>
+Ridondanza = informazione derivabile da altre già presenti.
+- Regola generale: eliminarle (riducono le prestazioni)
+- Eccezione: mantenerle se ricalcolarle è troppo costoso
+
+<strong>2. Eliminazione Attributi Multivalore:</strong>
+Attributo multivalore = assume più valori dello stesso tipo per una stessa entità (es. più telefoni).
+- Viola l'atomicità → soluzione: nuova ENTITÀ DEBOLE + relazione 1:N
+- Prima: Persona --(1,n)-- Telefono [attributo multivalore]
+- Dopo: Persona --(1,n)-- HaTelefono --(1,1)-- Telefono [nuova entità]
+
+<strong>3. Eliminazione IsA / Subset:</strong>
+Subset = generalizzazione con UNA SOLA sottoclasse (es. Persona → Studente).
+- Sostituire la freccia IsA con relazione esplicita 1:1
+- (0,1) lato Persona: può essere o meno Studente
+- (1,1) lato Studente: ogni Studente è sempre una Persona
+
+<strong>4. Eliminazione Generalizzazioni tra Entità:</strong>
+Due metodi:
+- <strong>Per FUSIONE</strong>: tutte le entità compattate in un'unica. Funziona sia per parziali che complete. Svantaggio: valori NULL.
+- <strong>Per SEPARAZIONE</strong>: il padre scompare, le figlie ereditano tutti i suoi attributi. SOLO per generalizzazioni COMPLETE (totali). Vantaggio: nessuno spreco di memoria.
+
+<strong>5. Scelta degli Identificatori Principali:</strong>
+Eliminare cicli circolari di identificatori scegliendo un identificatore alternativo per spezzare il ciclo.
+    `,
+    domande: [
+      {
+        domanda: "Quali sono i 5 passi di ristrutturazione dello schema E/R? Perché sono necessari?",
+        risposta: "La ristrutturazione è necessaria perché lo schema E/R contiene elementi — gerarchie, attributi multivalore, ridondanze — che non si traducono direttamente in tabelle. I 5 passi sono: (1) analisi delle ridondanze, per eliminare attributi derivabili da altri; (2) eliminazione degli attributi multivalore, creando entità deboli collegate con 1:N; (3) eliminazione dei subset IsA, sostituendo con relazioni 1:1 esplicite; (4) eliminazione delle generalizzazioni, per fusione o separazione; (5) scelta degli identificatori principali, spezzando cicli di dipendenze."
+      },
+      {
+        domanda: "Qual è la differenza tra fusione e separazione nell'eliminazione delle gerarchie?",
+        risposta: "La fusione compatta padre e figlie in un'unica entità, aggiungendo un attributo Tipo. Funziona sia per generalizzazioni parziali che complete, ma produce valori NULL per gli attributi non applicabili a tutte le istanze. La separazione elimina il padre: le figlie ereditano tutti i suoi attributi. Non produce NULL ma richiede procedure per controllare l'integrità. La differenza fondamentale è che la separazione funziona SOLO per le generalizzazioni complete — dove ogni istanza del padre appartiene ad almeno una figlia."
+      }
+    ],
+    qa: [
+      { domanda: "Cos'è una ridondanza nello schema E/R?", risposta: "Un'informazione derivabile da altre già presenti nello schema." },
+      { domanda: "Come si elimina un attributo multivalore?", risposta: "Si crea una nuova entità debole + una relazione 1:N con l'entità originale." },
+      { domanda: "La separazione funziona per tutti i tipi di generalizzazione?", risposta: "No, solo per le generalizzazioni COMPLETE (totali)." },
+      { domanda: "La fusione funziona per tutti i tipi?", risposta: "Sì, sia per parziali che per complete." },
+      { domanda: "Svantaggio principale della fusione?", risposta: "Produce valori NULL per attributi non applicabili a tutte le istanze." },
+    ],
+    daRicordare: [
+      "5 passi: Ridondanze → Multivalore → IsA → Generalizzazioni → Identificatori",
+      "Multivalore → nuova entità debole + relazione 1:N",
+      "SEPARAZIONE: SOLO per generalizzazioni complete — nessun NULL",
+      "FUSIONE: sia parziali che complete — ma produce NULL",
+    ],
+    daNonDire: [
+      "Non dire che la separazione funziona per tutti i tipi — vale SOLO per le complete",
+      "Non dimenticare che gli attributi multivalore violano l'atomicità (1NF)",
+    ],
+    raccomandazioni: `
+Memorizza i 5 passi in ordine — potrebbero chiederti di elencarli.
+Per fusione vs separazione usa la regola: "SEParazione = Solo per le Complete".
+Esempio classico per la separazione (completa): Persona → Uomo, Donna.
+Esempio per la fusione (parziale): Persona → Studente, Lavoratore (una persona può non essere né l'uno né l'altro).
+    `,
+  },
+
+  // ─────────────────────────────────────────
+  // SUBTOPIC: Regole di Derivazione
+  // ─────────────────────────────────────────
+  "regole-derivazione": {
+    titolo: "Le 7 Regole di Derivazione",
+    spiegazione: `
+Dopo la ristrutturazione, si applicano le <strong>7 regole di derivazione</strong>
+per tradurre lo schema E/R ristrutturato in schema logico (tabelle).
+
+<strong>Le 7 Regole:</strong>
+
+1. Ogni <strong>entità</strong> → diventa una <strong>relazione (tabella)</strong> con nome al plurale
+
+2. Ogni <strong>attributo di un'entità</strong> → diventa un <strong>attributo della relazione</strong>
+
+3. Gli <strong>attributi ereditano tutte le caratteristiche</strong> (tipo dato, NOT NULL, ecc.)
+
+4. L'<strong>identificatore dell'entità</strong> → diventa la <strong>Chiave Primaria (PK)</strong>
+
+5. L'<strong>associazione 1:1</strong> → diventa un'<strong>unica relazione</strong> con attributi di entrambe le entità
+
+6. L'<strong>associazione 1:N</strong> → la PK del lato '1' diventa <strong>FK nel lato 'N'</strong>
+   Esempio: EDITORE(1) → LIBRO(N): id_editore è PK in EDITORI e FK in LIBRI
+
+7. L'<strong>associazione M:N</strong> → diventa una <strong>nuova tabella di collegamento</strong>
+   con le PK di entrambe le entità come PK+FK composita
+   Esempio: AUTORE-LIBRO → RUOLO(id_autore PK+FK, ISBN PK+FK, ruolo)
+
+<strong>ERRORE COMUNE con la regola 7:</strong>
+Non creare la tabella di collegamento per M:N e mettere direttamente la FK in una delle due tabelle.
+Questo funziona solo se un libro ha UN SOLO autore — per più autori serve sempre la tabella!
+    `,
+    domande: [
+      {
+        domanda: "Come si traduce un'associazione M:N nel modello logico? Fai un esempio.",
+        risposta: "Un'associazione M:N non può essere memorizzata direttamente in nessuna delle due tabelle — aggiunger la FK su un lato produrrebbe valori ripetuti o NULL. La soluzione è creare una terza tabella di collegamento con le chiavi primarie di entrambe le entità, che diventano insieme la chiave primaria composita e al contempo chiavi esterne. Nella biblioteca, la relazione HA_SCRITTO tra AUTORE e LIBRO (M:N) diventa: RUOLO(id_autore PK+FK, ISBN PK+FK, ruolo), dove id_autore punta ad AUTORI e ISBN punta a LIBRI."
+      },
+      {
+        domanda: "Come si traduce un'associazione 1:N nel modello logico?",
+        risposta: "In un'associazione 1:N si applica la regola 6: la chiave primaria dell'entità sul lato '1' diventa chiave esterna (FK) nella tabella del lato 'N'. Ad esempio, tra EDITORE e LIBRO: un editore pubblica molti libri, ma ogni libro ha un solo editore. id_editore è PK di EDITORI e diventa FK in LIBRI. Non si duplicano i dati dell'editore in ogni riga del libro — si conserva solo il riferimento tramite FK."
+      }
+    ],
+    qa: [
+      { domanda: "Quante regole di derivazione esistono?", risposta: "7 regole." },
+      { domanda: "Cosa diventa ogni entità nel modello logico?", risposta: "Una tabella con nome al plurale." },
+      { domanda: "Cosa diventa l'identificatore di un'entità?", risposta: "La Chiave Primaria (PK) della relazione." },
+      { domanda: "Come si traduce un'associazione 1:N?", risposta: "La PK del lato '1' diventa FK nel lato 'N'." },
+      { domanda: "Come si traduce un'associazione M:N?", risposta: "Diventa una nuova tabella di collegamento con PK+FK composita." },
+    ],
+    daRicordare: [
+      "Regola 6 (1:N): PK del lato '1' → FK nel lato 'N'",
+      "Regola 7 (M:N): SEMPRE una nuova tabella di collegamento con PK+FK composita",
+      "Tabella M:N: PK composta = (PK_entità1 + PK_entità2), entrambe anche FK",
+      "Associazione 1:1 → un'unica tabella con attributi di entrambe",
+    ],
+    daNonDire: [
+      "Non mettere la FK direttamente in una delle due tabelle per risolvere M:N — serve la tabella di collegamento",
+      "Non dimenticare che nella tabella M:N entrambe le PK sono anche FK",
+    ],
+    raccomandazioni: `
+La regola 7 (M:N) è quella più frequente all'esame.
+Memorizza l'esempio: AUTORE --M:N-- LIBRO → RUOLO(id_autore PK+FK, ISBN PK+FK, ruolo).
+Spiega sempre il perché: "non posso mettere la FK in nessuna delle due tabelle perché produrrebbe valori ripetuti o NULL."
+    `,
+  },
+
+  // ─────────────────────────────────────────
+  // SUBTOPIC: Chiavi e Vincoli di Integrità
+  // ─────────────────────────────────────────
+  "chiavi-integrita": {
+    titolo: "Chiavi e Vincoli di Integrità",
+    spiegazione: `
+<strong>Superchiave:</strong>
+Sottoinsieme K di campi tale che nessuna coppia di righe ha lo stesso valore per K.
+I campi della superchiave si chiamano attributi primi.
+
+<strong>Chiave Candidata:</strong>
+Superchiave MINIMALE — non si può togliere nessun attributo senza perdere l'unicità.
+Una tabella può avere più chiavi candidate.
+
+<strong>Chiave Primaria (PK):</strong>
+La chiave candidata scelta come identificatore principale.
+- Numero MINIMO di attributi
+- NON PUÒ mai essere NULL
+- Indicata con PK a sinistra nello schema logico
+
+<strong>Chiave Esterna (FK):</strong>
+Attributi di T1 i cui valori corrispondono alla PK di T2.
+- Serve a collegare due tabelle
+- PUÒ essere NULL (salvo vincolo NOT NULL esplicito)
+
+<strong>Vincolo di Univocità della PK:</strong>
+Impossibile inserire due righe con lo stesso valore di PK.
+
+<strong>Vincolo di Integrità Referenziale (FK):</strong>
+Si può inserire un valore FK solo se esiste già come PK nella tabella referenziata.
+Esempio: inserire un libro con id_editore = E999 fallisce se E999 non esiste in EDITORI.
+
+<strong>Integrità di Entità:</strong>
+Nessuna componente della PK può essere NULL.
+Ogni dato è accessibile tramite: nome tabella + chiave + nome colonna.
+    `,
+    domande: [
+      {
+        domanda: "Qual è la differenza tra superchiave, chiave candidata e chiave primaria?",
+        risposta: "Una superchiave è qualsiasi insieme di attributi che identifica univocamente ogni riga, ma può contenere attributi superflui. Una chiave candidata è una superchiave minimale: non si può rimuovere nessun attributo senza perdere l'unicità. Una tabella può avere più chiavi candidate. La chiave primaria è la chiave candidata scelta come identificatore ufficiale — di solito la più semplice. A differenza delle candidate, la PK non può mai essere NULL."
+      },
+      {
+        domanda: "Cos'è il vincolo di integrità referenziale e perché è importante?",
+        risposta: "Il vincolo di integrità referenziale stabilisce che un valore FK può essere inserito in una tabella solo se quel valore esiste già come PK nella tabella referenziata. È importante perché garantisce che non esistano riferimenti a dati inesistenti — evita i 'link rotti' nel database. Ad esempio, non si può registrare un libro con un editore inesistente: il DBMS rifiuta l'operazione se id_editore non corrisponde a nessun valore in EDITORI."
+      }
+    ],
+    qa: [
+      { domanda: "La PK può essere NULL?", risposta: "No, mai. La PK non può mai avere valore NULL." },
+      { domanda: "La FK può essere NULL?", risposta: "Sì, può essere NULL a meno che non sia vincolata NOT NULL." },
+      { domanda: "Cos'è il vincolo di integrità referenziale?", risposta: "Si può inserire un valore FK solo se esiste già come PK nella tabella referenziata." },
+      { domanda: "Differenza tra PK e FK?", risposta: "PK identifica univocamente le righe della propria tabella; FK crea un collegamento verso la PK di un'altra tabella." },
+    ],
+    daRicordare: [
+      "PK: minimale, univoca, MAI NULL",
+      "FK: referenzia la PK di un'altra tabella, PUÒ essere NULL",
+      "Vincolo FK: il valore FK deve esistere come PK nell'altra tabella",
+      "Superchiave → Chiave Candidata → Chiave Primaria (restrittività crescente)",
+    ],
+    daNonDire: [
+      "Non dire che la FK non può essere NULL — può esserlo (salvo NOT NULL esplicito)",
+      "Non confondere chiave candidata con chiave primaria — ci possono essere più candidate",
+    ],
+    raccomandazioni: `
+Usa l'esempio della biblioteca: ISBN è PK di LIBRI, id_editore è FK in LIBRI che punta alla PK di EDITORI.
+Concretizza il vincolo referenziale: "se inserisco un libro con id_editore = E999 ma E999 non esiste in EDITORI, il DBMS rifiuta l'operazione."
+Questo dimostra comprensione pratica, non solo teorica.
+    `,
+  },
+
+  // ─────────────────────────────────────────
+  // SUBTOPIC: Normalizzazione
+  // ─────────────────────────────────────────
+  "normalizzazione-avanzata": {
+    titolo: "Normalizzazione — 1NF, 2NF, 3NF, BCNF",
+    spiegazione: `
+La normalizzazione è un <strong>processo di decomposizione</strong> che elimina le ridondanze.
+
+<strong>Due requisiti per ogni decomposizione valida:</strong>
+1. Senza perdita di informazione: T = T1 ∪ T2 (si può sempre ricostruire l'originale)
+2. Conservazione delle dipendenze: i vincoli originali sono mantenuti
+
+<strong>Dipendenza Funzionale (X → Y):</strong>
+I valori di X determinano univocamente il valore di Y.
+- <strong>Completa</strong>: Y dipende da TUTTI gli attributi di X
+- <strong>Parziale</strong>: Y dipende solo da un SOTTOINSIEME di X
+- <strong>Transitiva</strong>: X → A → Y (Y non dipende direttamente dalla PK)
+- <strong>Banale</strong>: Y è sottoinsieme di X (sempre vera, non aggiunge info)
+
+<strong>1NF — Prima Forma Normale:</strong>
+- Tutti gli attributi ATOMICI (un solo valore per cella)
+- Esiste una chiave primaria
+
+<strong>2NF — Seconda Forma Normale:</strong>
+- In 1NF + nessuna dipendenza funzionale PARZIALE dalla PK
+- Rilevante solo se la PK è COMPOSTA
+- Problema classico: impiegato → livello con PK=(impiegato, progetto)
+
+<strong>3NF — Terza Forma Normale:</strong>
+- In 2NF + nessuna dipendenza funzionale TRANSITIVA
+- Problema classico: (imp,prog) → ruolo → costo_orario
+
+<strong>BCNF — Forma Normale Boyce-Codd:</strong>
+- In 3NF + per ogni DF non banale X → Y, X è SUPERCHIAVE
+- Più restrittiva della 3NF — gestisce anomalie con più chiavi candidate
+    `,
+    domande: [
+      {
+        domanda: "Spiega 1NF, 2NF e 3NF con esempi pratici.",
+        risposta: "La 1NF richiede attributi atomici e PK. Esempio violazione: attributo 'nominativo' che contiene nome e cognome — non è atomico. La 2NF richiede assenza di dipendenze parziali dalla PK (solo con PK composte). Esempio: tabella Incarichi con PK=(impiegato, progetto); l'attributo 'livello' dipende solo da 'impiegato' — dipendenza parziale, viola la 2NF. La 3NF richiede assenza di dipendenze transitive. Nella stessa tabella: (impiegato, progetto) → ruolo → costo_orario; costo_orario dipende da ruolo, non direttamente dalla PK — dipendenza transitiva, viola la 3NF."
+      },
+      {
+        domanda: "Cos'è la BCNF e in cosa differisce dalla 3NF?",
+        risposta: "La BCNF è più restrittiva: per ogni dipendenza funzionale non banale X → Y, X deve essere una superchiave. La 3NF permette eccezioni quando X fa parte di una chiave candidata. Esempio: tabella (docente, materia, studente) con 'docente → materia'. Le chiavi candidate sono (materia, studente) e (docente, studente). La dipendenza 'docente → materia' viola la BCNF perché 'docente' da solo non è superchiave, anche se è parte di una chiave candidata. La soluzione è decomporre in (docente, materia) e (docente, studente)."
+      }
+    ],
+    qa: [
+      { domanda: "Cosa richiede la 1NF?", risposta: "Attributi atomici (un valore per cella) + chiave primaria." },
+      { domanda: "Cosa richiede la 2NF?", risposta: "1NF + nessuna dipendenza funzionale parziale dalla PK." },
+      { domanda: "Cosa richiede la 3NF?", risposta: "2NF + nessuna dipendenza funzionale transitiva." },
+      { domanda: "Cosa richiede la BCNF?", risposta: "3NF + ogni determinante di ogni DF non banale è una superchiave." },
+      { domanda: "La 2NF è rilevante con PK semplice?", risposta: "No, con PK a singolo attributo la 2NF è automaticamente soddisfatta." },
+    ],
+    daRicordare: [
+      "1NF: attributi atomici + PK",
+      "2NF: no DF parziali (solo con PK composte)",
+      "3NF: no DF transitive",
+      "BCNF: ogni determinante è superchiave (più restrittiva della 3NF)",
+      "Decomposizione sempre: senza perdita + conserva dipendenze",
+    ],
+    daNonDire: [
+      "Non dire che la 2NF è rilevante anche con PK semplici",
+      "Non confondere dipendenza parziale (2NF) con dipendenza transitiva (3NF)",
+    ],
+    raccomandazioni: `
+Usa la tabella Incarichi come filo conduttore: PK=(impiegato, progetto), attributi: livello, budget, anno, ruolo, costo_orario.
+- impiegato → livello: parziale → viola 2NF
+- ruolo → costo_orario: transitiva → viola 3NF
+Soluzione finale: 4 tabelle separate (Incarichi, Impiegati, Progetti, Ruoli).
+Questo esempio copre tutto dalla 1NF alla 3NF in modo concreto.
+    `,
+  },
+
+  // ─────────────────────────────────────────
+  // SUBTOPIC: SQL e Funzioni di Aggregazione
+  // ─────────────────────────────────────────
+  "sql-aggregazione": {
+    titolo: "SQL e Funzioni di Aggregazione",
+    spiegazione: `
+<strong>SQL (Structured Query Language)</strong> è il linguaggio standard per i DBMS relazionali.
+È <strong>dichiarativo</strong>: si dice COSA si vuole, non COME ottenerlo.
+
+<strong>Le 3 parti di SQL:</strong>
+- <strong>DDL</strong> (Data Definition Language): struttura → CREATE TABLE, ALTER TABLE, DROP TABLE
+- <strong>DML</strong> (Data Manipulation Language): dati → SELECT, INSERT, UPDATE, DELETE
+- <strong>DCL</strong> (Data Control Language): permessi → GRANT, REVOKE
+
+<strong>Il comando SELECT implementa le 3 operazioni relazionali:</strong>
+- Proiezione: quali colonne mostrare (SELECT col1, col2)
+- Selezione: filtra righe (WHERE condizione)
+- Congiunzione: combina tabelle (JOIN ... ON ...)
+
+<strong>Funzioni di Aggregazione:</strong>
+Calcolano valori su INSIEMI di tuple (non su singole righe):
+- COUNT(colonna): conta valori NON NULL
+- COUNT(*): conta TUTTE le righe inclusi i NULL
+- COUNT(DISTINCT col): conta valori unici non NULL
+- SUM, MAX, MIN, AVG, STDEV, VARIANCE
+
+<strong>REGOLA CRITICA di visibilità:</strong>
+Nella SELECT con aggregazione, la lista colonne può contenere SOLO funzioni di aggregazione.
+NON si possono mescolare colonne normali e funzioni di aggregazione senza GROUP BY.
+
+<strong>Esempio COUNT — tabella Imp sede S01 (4 impiegati, 2 con stipendio NULL):</strong>
+- COUNT(Stipendio) = 3 (esclude NULL)
+- COUNT(*) = 4 (include tutto)
+- COUNT(DISTINCT Stipendio) = 2 (valori unici non NULL)
+    `,
+    domande: [
+      {
+        domanda: "Qual è la differenza tra COUNT(colonna), COUNT(*) e COUNT(DISTINCT col)?",
+        risposta: "COUNT(colonna) conta solo le righe dove la colonna specificata ha un valore non NULL, escludendo quindi le righe con valori vuoti. COUNT(*) conta tutte le righe della tabella indipendentemente dalla presenza di NULL in qualsiasi colonna. COUNT(DISTINCT colonna) conta solo i valori distinti e non NULL nella colonna. Esempio pratico: sede S01 con 4 impiegati di cui 2 con stipendio NULL — COUNT(Stipendio)=3, COUNT(*)=4, COUNT(DISTINCT Stipendio)=2 se i due stipendi non nulli sono diversi tra loro."
+      },
+      {
+        domanda: "Cos'è la regola di visibilità delle funzioni di aggregazione?",
+        risposta: "La regola stabilisce che in una SELECT con funzioni di aggregazione, la lista delle colonne può contenere esclusivamente altre funzioni di aggregazione — non colonne normali. Questo perché le funzioni di aggregazione restituiscono un singolo valore per l'intero insieme di righe, mentre una colonna normale restituisce un valore per ogni riga: semanticamente incompatibili. Per usare sia colonne normali che aggregazioni insieme è necessario GROUP BY."
+      }
+    ],
+    qa: [
+      { domanda: "COUNT(colonna) esclude i NULL?", risposta: "Sì, COUNT(colonna) esclude i valori NULL." },
+      { domanda: "COUNT(*) include i NULL?", risposta: "Sì, COUNT(*) conta tutte le righe incluse quelle con NULL." },
+      { domanda: "DISTINCT funziona con COUNT(*)?", risposta: "No, DISTINCT si usa solo con COUNT(colonna), mai con COUNT(*)." },
+      { domanda: "SQL è un linguaggio procedurale?", risposta: "No, è dichiarativo: si specifica COSA ottenere, non COME." },
+      { domanda: "DDL, DML, DCL — esempi?", risposta: "DDL: CREATE TABLE; DML: SELECT, INSERT; DCL: GRANT, REVOKE." },
+    ],
+    daRicordare: [
+      "COUNT(col) esclude NULL; COUNT(*) include tutto; COUNT(DISTINCT col) valori unici",
+      "Regola di visibilità: SELECT con aggregati → SOLO funzioni di aggregazione (senza GROUP BY)",
+      "SQL è DICHIARATIVO: dici COSA, non COME",
+      "SELECT implementa: proiezione + selezione + join",
+    ],
+    daNonDire: [
+      "Non dire che COUNT(*) esclude i NULL — li include tutti",
+      "Non mescolare colonne normali e aggregazioni senza GROUP BY",
+    ],
+    raccomandazioni: `
+Il COUNT è la funzione più probabile all'esame.
+Prepara l'esempio concreto: sede S01, 4 impiegati, 2 con stipendio NULL.
+COUNT(Stipendio)=3, COUNT(*)=4, COUNT(DISTINCT Stipendio)=2.
+Commenta ogni risultato — dimostra comprensione reale.
+    `,
+  },
+
+  // ─────────────────────────────────────────
+  // SUBTOPIC: Operazioni Relazionali
+  // ─────────────────────────────────────────
+  "operazioni-relazionali": {
+    titolo: "Operazioni Relazionali (Algebra Relazionale)",
+    spiegazione: `
+Le operazioni relazionali permettono di <strong>interrogare e manipolare</strong> le tabelle.
+Sono la base teorica di SQL.
+
+<strong>Selezione (σ):</strong>
+Filtra le RIGHE che soddisfano una condizione.
+- Stesso numero di colonne (stesso grado)
+- Cardinalità minore o uguale
+- SQL: clausola WHERE
+
+<strong>Proiezione (π):</strong>
+Estrae specifiche COLONNE.
+- Grado minore o uguale
+- Stessa cardinalità (duplicati rimossi)
+- SQL: lista colonne nel SELECT
+
+<strong>Congiunzione / Join (⋈):</strong>
+Combina due tabelle tramite un attributo comune.
+- Grado risultato = N1 + N2 - 1
+- Cardinalità NON prevedibile a priori
+- SQL: JOIN ... ON ...
+
+<strong>Operazioni insiemistiche</strong> (richiedono tabelle OMOGENEE — stesse colonne, stesso tipo):
+- Unione: righe di entrambe senza duplicati
+- Intersezione: solo le righe comuni a entrambe
+- Differenza: righe della prima non presenti nella seconda
+
+<strong>Ordine ottimale per combinare operazioni:</strong>
+1. Selezione prima (riduce le righe)
+2. Congiunzione (combina)
+3. Proiezione (riduce le colonne)
+    `,
+    domande: [
+      {
+        domanda: "Descrivi selezione, proiezione e join con le loro caratteristiche.",
+        risposta: "La selezione filtra le righe che soddisfano una condizione booleana: il risultato ha lo stesso numero di colonne ma cardinalità minore o uguale (corrisponde al WHERE in SQL). La proiezione estrae colonne specifiche: il risultato ha meno colonne ma lo stesso numero di righe, con i duplicati eliminati (corrisponde alla lista colonne nel SELECT). Il join combina due tabelle abbinando le righe con valori uguali in un attributo comune: il grado del risultato è N1+N2-1 e la cardinalità non è prevedibile (corrisponde a JOIN ... ON in SQL)."
+      },
+      {
+        domanda: "Cosa si intende per tabelle omogenee? Quali operazioni le richiedono?",
+        risposta: "Due tabelle sono omogenee se hanno lo stesso numero di attributi, dello stesso tipo e nello stesso ordine. Le operazioni insiemistiche — unione, intersezione e differenza — richiedono questa condizione. L'unione produce tutte le righe di entrambe le tabelle senza duplicati. L'intersezione produce solo le righe comuni. La differenza produce le righe della prima tabella non presenti nella seconda. Corrispondono rispettivamente a UNION, INTERSECT e EXCEPT in SQL."
+      }
+    ],
+    qa: [
+      { domanda: "Cosa fa la selezione?", risposta: "Filtra le RIGHE che soddisfano una condizione. Stesso grado, cardinalità minore o uguale." },
+      { domanda: "Cosa fa la proiezione?", risposta: "Estrae colonne specifiche. Grado minore, stessa cardinalità (duplicati rimossi)." },
+      { domanda: "Grado del risultato di un join?", risposta: "N1 + N2 - 1 (colonne di entrambe meno quella comune)." },
+      { domanda: "Cosa richiedono le operazioni insiemistiche?", risposta: "Tabelle omogenee: stesso numero di colonne, stesso tipo, stesso ordine." },
+      { domanda: "Ordine ottimale delle operazioni?", risposta: "Selezione → Join → Proiezione." },
+    ],
+    daRicordare: [
+      "Selezione = filtra RIGHE (WHERE) — stesso grado",
+      "Proiezione = filtra COLONNE (SELECT col) — stessa cardinalità",
+      "Join = combina tabelle — grado N1+N2-1",
+      "Operazioni insiemistiche richiedono tabelle OMOGENEE",
+      "Ordine ottimale: Selezione → Join → Proiezione",
+    ],
+    daNonDire: [
+      "Non confondere selezione (righe) con proiezione (colonne)",
+      "Non dire che la cardinalità del join è prevedibile — non lo è",
+    ],
+    raccomandazioni: `
+Usa l'esempio pratico: "Ottenere RagioneSociale e NomeAgente per i clienti con CodiceAttivita = 3109."
+Mostra i 3 passi: 1) Selezione WHERE CodiceAttivita=3109, 2) Join con Agenti, 3) Proiezione su RagioneSociale e NomeAgente.
+Poi scrivi subito l'SQL equivalente — dimostra che sai tradurre la teoria in pratica.
+    `,
+  },
+
 };

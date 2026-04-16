@@ -155,7 +155,7 @@ maturita-prep/
 ### data/informatica/
 | File | Status |
 |------|--------|
-| informatica-basi-di-dati.js | ✅ DONE |
+| informatica-basi-di-dati.js | ✅ DONE (aggiornato: aggiunti 9 subtopic di progettazione logica) |
 | informatica-reti.js | ✅ DONE |
 | informatica-programmazione.js | ✅ DONE |
 | informatica-sistemi-operativi.js | ✅ DONE |
