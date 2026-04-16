@@ -303,31 +303,35 @@ html, body {
 
   #topbar-right { display: none; }
 
-  /* Remove sidebar from flex flow entirely on mobile */
+  /* Sidebar: hidden by default, slides in as overlay */
   #sidebar {
+    display: none;
     position: fixed;
     top: var(--topbar-height);
     left: 0;
     height: calc(100vh - var(--topbar-height));
     z-index: 50;
     box-shadow: var(--shadow-soft);
-    transform: translateX(-110%);
-    transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
     width: var(--sidebar-width) !important;
     min-width: var(--sidebar-width) !important;
     max-width: var(--sidebar-width) !important;
+    transform: translateX(-110%);
+    transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
+  /* Shown: slide in from left */
   #sidebar.sidebar-open {
+    display: flex;
     transform: translateX(0);
   }
 
   #resize-handle { display: none; }
 
-  /* Content takes full width since sidebar is out of flow */
+  /* Content takes full width */
   #content {
     width: 100%;
     flex: 1;
+    min-width: 0;
   }
 
   /* Bigger touch targets for tree nodes */
