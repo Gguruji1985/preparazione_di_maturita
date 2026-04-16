@@ -703,6 +703,102 @@ Sottolinea sempre che le prime due fasi sono indipendenti dal DBMS — è un pun
   },
 
   // ─────────────────────────────────────────
+  // SUBTOPIC: Modello Logico
+  // ─────────────────────────────────────────
+  "modello-logico": {
+    titolo: "Il Modello Logico — Dai Modelli Classici allo Schema Logico",
+    spiegazione: `
+Il <strong>modello logico</strong> è la fase che trasforma lo schema E/R in una struttura
+organizzata nelle strutture dati previste dal DBMS scelto.
+
+<strong>I 4 modelli logici classici:</strong>
+
+<strong>1. Modello Gerarchico:</strong>
+- Struttura ad albero — ogni nodo figlio ha UN SOLO padre
+- Associazioni solo di tipo 1:N
+- Limiti: struttura rigida, ridondanza dei dati, difficoltà con relazioni M:N
+- Esempio: AGENTE → CLIENTI → ORDINI → RIGHE → ARTICOLI
+- Stato: OBSOLETO
+
+<strong>2. Modello Reticolare:</strong>
+- Struttura a grafo orientato — un figlio può avere PIÙ padri
+- Estensione del gerarchico, riduce la ridondanza
+- Limiti: implementazione complessa, difficile da interrogare
+- Stato: OBSOLETO
+
+<strong>3. Modello Relazionale (RDBMS):</strong>
+- Struttura a tabelle (righe e colonne)
+- Basato sulla teoria matematica degli insiemi (Codd, 1970)
+- Opera su insiemi di record, non su singoli record
+- Lo STANDARD de facto: MySQL, Oracle, PostgreSQL, SQL Server
+- Stato: STANDARD ATTUALE
+
+<strong>4. Modello a Oggetti (ODBMS):</strong>
+- I dati sono rappresentati come oggetti con attributi e metodi
+- Usato in contesti specializzati (es. PostgreSQL con estensioni OO)
+- Stato: USO SPECIALE
+
+<strong>Perché il relazionale ha vinto:</strong>
+1. Fu definito TEORICAMENTE prima di qualsiasi implementazione
+2. Opera su INSIEMI di record contemporaneamente (non uno alla volta)
+3. È il modello più semplice e vicino al modo naturale di pensare i dati
+
+<strong>Dallo schema E/R allo schema logico — il processo completo:</strong>
+Schema E/R → Ristrutturazione (5 passi) → Schema E/R Ristrutturato
+→ Regole di Derivazione (7 regole) → Schema Logico (tabelle)
+→ Vincoli di Integrità + Documentazione
+
+<strong>Struttura dello schema logico:</strong>
+Ogni entità diventa una <strong>relazione</strong> (tabella) rappresentata con:
+- Nome al plurale dentro un rettangolo
+- PK indicata con PK a sinistra
+- FK indicate con FK a sinistra
+- Simboli di associazione (1:1 parziale/totale, 1:N parziale/totale)
+    `,
+    domande: [
+      {
+        domanda: "Quali sono i modelli logici classici? Descrivi le differenze principali.",
+        risposta: "I modelli logici classici sono gerarchico, reticolare, relazionale e a oggetti. Il modello gerarchico organizza i dati come un albero: ogni nodo figlio ha esattamente un solo padre e le associazioni sono sempre 1:N. È rigido e genera ridondanza quando lo stesso dato deve apparire in più rami. Il modello reticolare è un'estensione che permette a un figlio di avere più padri, usando una struttura a grafo orientato: riduce la ridondanza ma è più complesso da implementare. Entrambi sono oggi considerati obsoleti. Il modello relazionale, introdotto da Codd nel 1970, organizza i dati in semplici tabelle e opera su insiemi di record: è lo standard universale. Il modello a oggetti rappresenta i dati come oggetti con attributi e metodi, usato in contesti specializzati."
+      },
+      {
+        domanda: "Come si passa dallo schema E/R allo schema logico? Descrivere il processo.",
+        risposta: "Il passaggio avviene in due fasi principali. Prima si ristruttura lo schema E/R: si analizzano e riducono le ridondanze, si eliminano gli attributi multivalore creando entità deboli con relazioni 1:N, si eliminano le gerarchie IsA trasformandole in relazioni 1:1 esplicite, si eliminano le generalizzazioni per fusione o separazione, e si risolvono eventuali cicli di identificatori. Poi si applica la traduzione tramite le 7 regole di derivazione: ogni entità diventa una tabella, ogni associazione 1:N genera una FK, ogni associazione M:N genera una nuova tabella di collegamento. Il risultato è lo schema logico — un insieme di relazioni con PK, FK e vincoli di integrità."
+      },
+      {
+        domanda: "Perché il modello relazionale ha soppiantato quelli gerarchico e reticolare?",
+        risposta: "Ci sono tre ragioni fondamentali. Prima, il modello relazionale fu definito a livello teorico da Edgar Codd nel 1970 prima di qualsiasi implementazione su calcolatore, a differenza degli altri modelli nati per astrazione da sistemi già esistenti: questa solidità teorica ne garantì la coerenza e la generalità. Seconda, le operazioni dell'algebra relazionale agiscono su insiemi di record contemporaneamente, mentre nei modelli gerarchici e reticolari le operazioni agiscono su un record alla volta, rendendo il relazionale molto più efficiente nelle interrogazioni complesse. Terza, le semplici tabelle sono più intuitive e vicine al modo naturale di organizzare le informazioni, abbassando la barriera d'uso rispetto alle strutture ad albero o a grafo."
+      }
+    ],
+    qa: [
+      { domanda: "Struttura del modello gerarchico?", risposta: "Albero — un solo padre per ogni figlio, associazioni 1:N. Obsoleto." },
+      { domanda: "Struttura del modello reticolare?", risposta: "Grafo orientato — un figlio può avere più padri. Obsoleto." },
+      { domanda: "Struttura del modello relazionale?", risposta: "Tabelle — RDBMS, standard de facto." },
+      { domanda: "Chi ha introdotto il modello relazionale e quando?", risposta: "Edgar F. Codd, IBM, nel 1970." },
+      { domanda: "Qual è il limite principale del modello gerarchico?", risposta: "Un figlio può avere un solo padre — genera ridondanza e non gestisce le relazioni M:N." },
+      { domanda: "Qual è il vantaggio del reticolare rispetto al gerarchico?", risposta: "Un figlio può avere più padri, quindi meno ridondanza. Ma è più complesso da implementare." },
+      { domanda: "Come si rappresenta una relazione nello schema logico?", risposta: "Rettangolo con nome al plurale, PK a sinistra, FK a sinistra, simboli di associazione sui lati." },
+    ],
+    daRicordare: [
+      "Gerarchico = albero, 1:N, un padre solo → OBSOLETO",
+      "Reticolare = grafo, più padri possibili → OBSOLETO",
+      "Relazionale = tabelle, Codd 1970, standard de facto → RDBMS",
+      "Il relazionale opera su INSIEMI di record (non uno alla volta)",
+      "E/R → Ristrutturazione (5 passi) → Regole di Derivazione (7 regole) → Schema Logico",
+    ],
+    daNonDire: [
+      "Non dire che gerarchico e reticolare sono ancora usati — sono obsoleti",
+      "Non confondere modello logico (fase di progettazione) con modello relazionale (uno specifico modello logico)",
+      "Non saltare la ristrutturazione — lo schema E/R NON si traduce direttamente in tabelle senza prima ristrutturarlo",
+    ],
+    raccomandazioni: `
+Questo subtopic è il 'collante' tra la progettazione concettuale (E/R) e quella logica (tabelle).
+Inizia con la panoramica dei 4 modelli, poi spiega perché il relazionale ha vinto.
+Poi mostra il percorso completo: E/R → Ristrutturazione → Regole di Derivazione → Schema Logico.
+Usalo come introduzione prima di entrare nel dettaglio della ristrutturazione e delle regole di derivazione.
+    `,
+  },
+
+  // ─────────────────────────────────────────
   // SUBTOPIC: Ristrutturazione E/R
   // ─────────────────────────────────────────
   "ristrutturazione-er": {
