@@ -176,41 +176,41 @@ maturita-prep/
 | File | Status |
 |------|--------|
 | ita-origini.js | ✅ DONE |
-| ita-umanesimo.js | ⬜ TODO |
-| ita-illuminismo.js | ⬜ TODO |
+| ita-umanesimo.js | ✅ DONE |
+| ita-illuminismo.js | ✅ DONE |
 | ita-romanticismo.js | ✅ DONE |
 | ita-verismo.js | ✅ DONE |
 | ita-decadentismo.js | ✅ DONE |
 | ita-novecento-prosa.js | ✅ DONE |
-| ita-novecento-poesia.js | ⬜ TODO |
+| ita-novecento-poesia.js | ✅ DONE |
 | ita-dopoguerra.js | ✅ DONE |
-| sto-fine-ottocento.js | ⬜ TODO |
-| sto-belle-epoque.js | ⬜ TODO |
+| sto-fine-ottocento.js | ✅ DONE |
+| sto-belle-epoque.js | ✅ DONE |
 | sto-ww1.js | ✅ DONE |
 | sto-totalitarismi.js | ✅ DONE |
 | sto-guerra-civile-spagna.js | ✅ DONE |
 | sto-ww2.js | ✅ DONE |
 | sto-guerra-fredda.js | ✅ DONE |
 | sto-italia-repubblicana.js | ✅ DONE |
-| fil-idealismo.js | ⬜ TODO |
-| fil-reazione-idealismo.js | ⬜ TODO |
-| fil-marx.js | ⬜ TODO |
-| fil-positivismo.js | ⬜ TODO |
+| fil-idealismo.js | ✅ DONE |
+| fil-reazione-idealismo.js | ✅ DONE |
+| fil-marx.js | ✅ DONE |
+| fil-positivismo.js | ✅ DONE |
 | fil-nietzsche.js | ✅ DONE |
-| fil-freud.js | ⬜ TODO |
-| fil-epistemologia.js | ⬜ TODO |
-| fil-esistenzialismo.js | ⬜ TODO |
+| fil-freud.js | ✅ DONE |
+| fil-epistemologia.js | ✅ DONE |
+| fil-esistenzialismo.js | ✅ DONE |
 
 ### data/scientifico/
 | File | Status |
 |------|--------|
-| mat-limiti.js | ⬜ TODO |
-| mat-continuita.js | ⬜ TODO |
-| mat-derivate.js | ⬜ TODO |
-| mat-studio-funzione.js | ⬜ TODO |
-| mat-integrali.js | ⬜ TODO |
-| mat-geometria-analitica.js | ⬜ TODO |
-| mat-probabilita.js | ⬜ TODO |
+| mat-limiti.js | ✅ DONE |
+| mat-continuita.js | ✅ DONE |
+| mat-derivate.js | ✅ DONE |
+| mat-studio-funzione.js | ✅ DONE |
+| mat-integrali.js | ✅ DONE |
+| mat-geometria-analitica.js | ✅ DONE |
+| mat-probabilita.js | ✅ DONE |
 | fis-meccanica.js | ⬜ TODO |
 | fis-termodinamica.js | ⬜ TODO |
 | fis-elettromagnetismo.js | ⬜ TODO |
